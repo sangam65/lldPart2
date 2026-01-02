@@ -22,23 +22,14 @@ public class DoublyLinkedList<K,V>{
 
     }
     public void remove(Node<K,V> node){
-        Node<K,V>prev=node.getPrev();
-        Node<K,V> next=node.getNext();
-        prev.setNext(next);
-        next.setPrev(prev);
+        node.getNext().setPrev(node.getPrev());
+       node.getPrev().setNext(node.getNext());
     }
     public void moveToFront(Node<K,V> node){
         remove(node);
         addFirst(node.getKey(),node.getValue());
     }
-    public Node<K,V> removeLast(){
-        if(tail.getPrev()!=head){
-            Node<K,V> prev=tail.getPrev();
-            remove(prev);
-            return prev;
-        }
-        return null;
-    }
+    
     public Node<K,V> getLast(){
          if(tail.getPrev()!=head){
             return tail.getPrev();
