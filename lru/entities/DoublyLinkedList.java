@@ -10,13 +10,14 @@ public class DoublyLinkedList<K,V>{
         this.tail.setPrev(head);
 
     }
-    public void addFirst(Node<K,V> node){
-       
+    public Node<K,V> addFirst(K key,V value){
+        Node<K,V> node=createNode(key, value);
         Node<K,V> headNext=head.getNext();
         head.setNext(node);
         node.setNext(headNext);
         node.setPrev(head);
         headNext.setPrev(node);
+        return node;
        
 
     }
@@ -28,7 +29,7 @@ public class DoublyLinkedList<K,V>{
     }
     public void moveToFront(Node<K,V> node){
         remove(node);
-        addFirst(node);
+        addFirst(node.getKey(),node.getValue());
     }
     public Node<K,V> removeLast(){
         if(tail.getPrev()!=head){
@@ -45,7 +46,7 @@ public class DoublyLinkedList<K,V>{
          return null;
     }
     
-    public Node<K,V> createNode(K key,V value){
+    private Node<K,V> createNode(K key,V value){
         return new Node<K,V>(key, value);
     }
 }

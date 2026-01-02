@@ -1,7 +1,7 @@
 package lru.entities;
 
 public class Node <K,V>{
-    private  K key;
+    private final K key;
     public K getKey() {
         return key;
     }

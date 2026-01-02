@@ -43,11 +43,9 @@ public class LRU<K, V> {
             Node<K, V> last = doublyLinkedList.getLast();
             removeKey(last.getKey());
 
-
-
         }
-        Node<K,V> newNode=doublyLinkedList.createNode(key, value);
-      doublyLinkedList.addFirst(newNode);
+
+        Node<K, V> newNode = doublyLinkedList.addFirst(key, value);
         hashMap.put(key, newNode);
     }
 
@@ -55,7 +53,7 @@ public class LRU<K, V> {
 
         Node<K, V> node = getNodeFromKey(key);
         hashMap.remove(key);
-        System.out.println("Key removed "+key);
+        System.out.println("Key removed " + key);
         doublyLinkedList.remove(node);
 
     }
