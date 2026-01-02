@@ -55,6 +55,7 @@ public class LRU<K, V> {
 
         Node<K, V> node = getNodeFromKey(key);
         hashMap.remove(key);
+        System.out.println("Key removed "+key);
         doublyLinkedList.remove(node);
 
     }
