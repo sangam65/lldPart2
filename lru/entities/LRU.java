@@ -35,7 +35,7 @@ public class LRU<K, V> {
         return node;
     }
 
-    public void addValue(K key, V value) {
+    public synchronized void addValue(K key, V value) {
         if (hashMap.containsKey(key)) {
             removeKey(key);
         }
