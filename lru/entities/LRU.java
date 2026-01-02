@@ -10,7 +10,7 @@ public class LRU<K, V> {
     private int capacity;
 
     public LRU(int capacity) {
-        if(capacity<0){
+        if(capacity<=0){
             throw new RuntimeException("Capacity can't be zero or less than 0");
         }
         this.doublyLinkedList = new DoublyLinkedList<>();
@@ -45,12 +45,12 @@ public class LRU<K, V> {
         if (hashMap.size() == capacity) {
             Node<K, V> last = doublyLinkedList.getLast();
             doublyLinkedList.remove(last);
-            hashMap.remove(key);
+            hashMap.remove(last.getKey());
 
         }
 
         Node<K, V> newNode =doublyLinkedList.createNode(key, value);
-         doublyLinkedList.addFirst(newNode);
+        doublyLinkedList.addFirst(newNode);
         hashMap.put(key, newNode);
     }
 
