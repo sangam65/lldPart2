@@ -32,17 +32,17 @@ public class Board {
         }
     }
     public boolean cellOccupied(int x,int y) throws CellAlreadyOccupiedException{
-        if(cell[x][y].getSymbol()!=Symbol.EMPTY){
+        if(!cell[x][y].getSymbol().equals(Symbol.EMPTY)){
                 System.out.println("Cell is already occupied");
                     throw new CellAlreadyOccupiedException("Cell is already occupied");
             }
             return true;
     }
     public Symbol getCell(int x,int y) throws CellOutOfBoundException{
-        if(validCell(x, y)==true){
-            return cell[x][y].getSymbol();
-        }
-        return null;
+        validCell(x, y);
+        return cell[x][y].getSymbol();
+        
+      
     }
     public void placeSymbolOnCell(int x,int y,Symbol symbol) throws CellAlreadyOccupiedException,CellOutOfBoundException{
         validCell(x, y);
