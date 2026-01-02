@@ -12,7 +12,7 @@ public class Board {
     private void initializeBoard(int sz){
         for(int i=0;i<sz;i++){
             for(int j=0;j<sz;j++){
-                cell[i][j].setSymbol(Symbol.EMPTY);
+                cell[i][j]=new Cell(Symbol.EMPTY);
             }
         }
     }

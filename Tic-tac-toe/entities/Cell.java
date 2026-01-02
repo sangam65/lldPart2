@@ -1,6 +1,9 @@
 public class Cell {
-    
-    private Symbol symbol;
+     private Symbol symbol;
+    public Cell(Symbol symbol){
+        this.symbol=symbol;
+    }
+   
     
     public Symbol getSymbol() {
         return symbol;
