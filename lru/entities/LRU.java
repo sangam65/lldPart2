@@ -6,10 +6,13 @@ import lru.exception.KeyNotFoundException;
 
 public class LRU<K, V> {
     private final DoublyLinkedList<K, V> doublyLinkedList;
-    private HashMap<K, Node<K, V>> hashMap;
+    private final HashMap<K, Node<K, V>> hashMap;
     private int capacity;
 
     public LRU(int capacity) {
+        if(capacity<0){
+            throw new RuntimeException("Capacity can't be zero or less than 0");
+        }
         this.doublyLinkedList = new DoublyLinkedList<>();
         this.capacity = capacity;
         this.hashMap = new HashMap<>();
@@ -41,11 +44,13 @@ public class LRU<K, V> {
         }
         if (hashMap.size() == capacity) {
             Node<K, V> last = doublyLinkedList.getLast();
-            removeKey(last.getKey());
+            doublyLinkedList.remove(last);
+            hashMap.remove(key);
 
         }
 
-        Node<K, V> newNode = doublyLinkedList.addFirst(key, value);
+        Node<K, V> newNode =doublyLinkedList.createNode(key, value);
+         doublyLinkedList.addFirst(newNode);
         hashMap.put(key, newNode);
     }
 
