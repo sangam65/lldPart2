@@ -11,11 +11,17 @@ public class LRU<K, V> {
     private final DoublyLinkedList<K, V> doublyLinkedList;
     private final Map<K, Node<K, V>> hashMap;
     private int capacity;
+    private int size;
+
+    public int getSize() {
+        return size;
+    }
 
     public LRU(int capacity) {
         if (capacity <= 0) {
             throw new CapacityConstrainException("Capacity can't be zero or less than 0");
         }
+        this.size=0;
         this.doublyLinkedList = new DoublyLinkedList<>();
         this.capacity = capacity;
         this.hashMap = new ConcurrentHashMap<>();
@@ -25,7 +31,7 @@ public class LRU<K, V> {
         return capacity;
     }
 
-    public synchronized V getValue(K key) {
+    public V getValue(K key) {
 
         Node<K, V> node = getNodeFromKey(key);
         doublyLinkedList.moveToFront(node);
@@ -41,23 +47,26 @@ public class LRU<K, V> {
         return node;
     }
 
-    public synchronized void addValue(K key, V value)
+    public void addValue(K key, V value)
             throws NodeNullException, CapacityConstrainException, KeyNotFoundException {
-        try {
+
             // if key exists already
             if (hashMap.containsKey(key)) {
                 Node<K, V> existingNode = hashMap.get(key);
                 existingNode.setValue(value);
                 hashMap.put(key, existingNode);
                 doublyLinkedList.moveToFront(existingNode);
+                this.size++;
                 return;
             }
             // if capacity reached then remove last node
-            if (hashMap.size() == capacity) {
+            if (this.size == capacity) {
                 Node<K, V> last = doublyLinkedList.getLast();
                 if (last != null) {
+                    
                     doublyLinkedList.remove(last);
                     hashMap.remove(last.getKey());
+                    this.size--;
                 } else {
                     throw new CapacityConstrainException("can't add new node capacity has reached");
                 }
@@ -68,18 +77,18 @@ public class LRU<K, V> {
             Node<K, V> newNode = doublyLinkedList.createNode(key, value);
             doublyLinkedList.addFirst(newNode);
             hashMap.put(key, newNode);
-        } catch (NodeNullException | CapacityConstrainException | KeyNotFoundException e) {
-            throw e;
-        }
+            this.size++;
+        
 
     }
 
-    public synchronized void removeKey(K key) throws KeyNotFoundException{
+    public  void removeKey(K key) throws KeyNotFoundException{
 
         Node<K, V> node = getNodeFromKey(key);
         hashMap.remove(key);
         System.out.println("Key removed " + key);
         doublyLinkedList.remove(node);
+        this.size--;
 
     }
 
