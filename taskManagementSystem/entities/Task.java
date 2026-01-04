@@ -127,5 +127,8 @@ public class Task {
         };
         return comparator;
     }
+    public int getTaskPriorityValue(){
+        return this.taskPriority.getTaskPriorityValue();
+    }
     
 }

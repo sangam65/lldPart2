@@ -60,6 +60,13 @@ public class User {
             currentTask=task;
             changeTaskStatus();
         }
+        else{
+            if(currentTask.getTaskPriorityValue()<task.getTaskPriorityValue()){
+                currentTask.setTaskStatus(TaskStatus.ON_HOLD);
+                currentTask=task;
+                 changeTaskStatus();
+            }
+        }
         
     }
     public void removeTask(Task task){
