@@ -1,8 +1,8 @@
 package lru.entities;
 
 public class Node<K, V> {
-    private final K key;
-    private final V value;
+    private  K key;
+    private  V value;
     private Node<K, V> next;
     private Node<K, V> prev;
 

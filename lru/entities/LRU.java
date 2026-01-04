@@ -2,6 +2,7 @@ package lru.entities;
 
 import java.util.HashMap;
 
+import lru.exception.CapacityConstrainException;
 import lru.exception.KeyNotFoundException;
 
 public class LRU<K, V> {
@@ -10,8 +11,8 @@ public class LRU<K, V> {
     private int capacity;
 
     public LRU(int capacity) {
-        if(capacity<=0){
-            throw new RuntimeException("Capacity can't be zero or less than 0");
+        if (capacity <= 0) {
+            throw new CapacityConstrainException("Capacity can't be zero or less than 0");
         }
         this.doublyLinkedList = new DoublyLinkedList<>();
         this.capacity = capacity;
@@ -44,12 +45,17 @@ public class LRU<K, V> {
         }
         if (hashMap.size() == capacity) {
             Node<K, V> last = doublyLinkedList.getLast();
-            doublyLinkedList.remove(last);
-            hashMap.remove(last.getKey());
+            if (last != null) {
+                doublyLinkedList.remove(last);
+                hashMap.remove(last.getKey());
+            }
+            else{
+                throw new CapacityConstrainException("can't add new node capacity has reached");
+            }
 
         }
 
-        Node<K, V> newNode =doublyLinkedList.createNode(key, value);
+        Node<K, V> newNode = doublyLinkedList.createNode(key, value);
         doublyLinkedList.addFirst(newNode);
         hashMap.put(key, newNode);
     }
