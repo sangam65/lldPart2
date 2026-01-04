@@ -3,6 +3,14 @@ package lru.entities;
 public class Node<K, V> {
     private  K key;
     private  V value;
+    public void setKey(K key) {
+        this.key = key;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
+    }
+
     private Node<K, V> next;
     private Node<K, V> prev;
 

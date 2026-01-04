@@ -1,5 +1,7 @@
 package lru.entities;
 
+import lru.exception.NodeNullException;
+
 public class DoublyLinkedList<K, V> {
     private final Node<K, V> head;
     private final Node<K, V> tail;
@@ -13,7 +15,9 @@ public class DoublyLinkedList<K, V> {
     }
 
     public void addFirst(Node<K,V>node) {
-      
+        if(head==null){
+            throw new NodeNullException("head node is null");
+        }
         Node<K, V> headNext = head.getNext();
         head.setNext(node);
         node.setNext(headNext);
@@ -35,6 +39,9 @@ public class DoublyLinkedList<K, V> {
     }
 
     public Node<K, V> getLast() {
+        if(tail==null){
+               throw new NodeNullException("tail node is null");
+        }
         if (tail.getPrev() != head) {
             return tail.getPrev();
         }

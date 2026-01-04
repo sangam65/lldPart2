@@ -40,9 +40,15 @@ public class LRU<K, V> {
     }
 
     public synchronized void addValue(K key, V value) {
+        //  if key exists already
         if (hashMap.containsKey(key)) {
-            removeKey(key);
+            Node<K,V> existingNode=hashMap.get(key);
+            existingNode.setValue(value);
+            hashMap.put(key,existingNode);
+            doublyLinkedList.moveToFront(existingNode);
+            return;
         }
+        // if capacity reached then remove last node 
         if (hashMap.size() == capacity) {
             Node<K, V> last = doublyLinkedList.getLast();
             if (last != null) {
@@ -55,6 +61,7 @@ public class LRU<K, V> {
 
         }
 
+        // add the new node
         Node<K, V> newNode = doublyLinkedList.createNode(key, value);
         doublyLinkedList.addFirst(newNode);
         hashMap.put(key, newNode);
