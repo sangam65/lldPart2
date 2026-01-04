@@ -2,7 +2,6 @@ package lru.entities;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import lru.exception.CapacityConstrainException;
 import lru.exception.KeyNotFoundException;
