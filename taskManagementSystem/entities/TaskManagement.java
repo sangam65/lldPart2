@@ -116,7 +116,7 @@ public class TaskManagement {
     }
 
 
-    public synchronized void updateAssignee(Task task,User assignee){
+    public synchronized void changeAssignee(Task task,User assignee){
         if(task==null||assignee==null){
             throw new TaskException("While assigning task to user , task and assignee can't be null");
         }
