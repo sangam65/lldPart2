@@ -57,6 +57,7 @@ public class User {
         }
         if(currentTask==null){
             currentTask=task;
+            changeTaskStatus();
         }
         tasksToDo.add(task);
     }
@@ -93,7 +94,14 @@ public class User {
             if(!tasksToDo.isEmpty()){
                 Task nxtTask=tasksToDo.first();
                 currentTask=nxtTask;
+                changeTaskStatus();
+            }
+            else{
+                currentTask=null;
             }
         }
+    }
+    private void changeTaskStatus(){
+           this.currentTask.setTaskStatus(TaskStatus.IN_PROGRESS);
     }
 }
