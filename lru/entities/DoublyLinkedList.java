@@ -30,9 +30,17 @@ public class DoublyLinkedList<K, V> {
 
     }
 
-    public void remove(Node<K, V> node) {
-        node.getNext().setPrev(node.getPrev());
-        node.getPrev().setNext(node.getNext());
+    public void remove(Node<K, V> node)throws NodeNullException {
+        if(node==null){
+            throw new NodeNullException("Removal node can't be null");
+        }
+        Node<K,V> nodeNext=node.getNext();
+        Node<K,V>nodePrev=node.getPrev();
+        if(nodeNext==null||nodePrev==null){
+             throw new NodeNullException("Removal node's next or prev can't be null");
+        }
+        nodeNext.setPrev(nodePrev);
+        nodePrev.setNext(nodeNext);
         
     }
 
