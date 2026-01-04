@@ -43,7 +43,7 @@ public class User {
         this.userId = UUID.randomUUID().toString();
         this.name = name;
         this.comments = new ArrayList<>();
-        this.tasksToDo =new TreeSet<>();
+        this.tasksToDo =new TreeSet<>(Task.comparator());
         this.completedTask = new ArrayList<>();
         this.currentTask = null;
     }
@@ -79,6 +79,9 @@ public class User {
             completedTask.add(task);
              tasksToDo.remove(task);
              changeTask(task);
+        }
+        else{
+             throw new TaskException("Task is not given to the user so this user's can't complete the task");
         }
        
     }

@@ -94,8 +94,11 @@ public class TaskManagement {
             throw new TaskException("Task is already completed");
         }
         task.setTaskStatus(TaskStatus.DONE);
+        User user=task.getAssignee();
+        user.completeTask(task);
         completedTasks.put(task.getTaskId(),task);
         tasks.remove(task.getTaskId());
+
     }
     public synchronized List<Task> getCompletedTasks(){
         List<Task>finishedTasks=new ArrayList<>();

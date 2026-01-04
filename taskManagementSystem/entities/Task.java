@@ -1,6 +1,7 @@
 package taskManagementSystem.entities;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,6 +103,23 @@ public class Task {
             throw new TaskException("Assignee can't be changed after task is completed");
         }
     }
+
+    public static boolean compareTo(Task a,Task b){
+        return a.getTaskPriority().getTaskPriorityValue()<b.getTaskPriority().getTaskPriorityValue();
+    }
    
+    public static Comparator<Task> comparator(){
+        Comparator<Task>comparator=new Comparator<Task>() {
+            @Override
+            public int compare(Task a,Task b){
+                TaskPriority taskA=a.getTaskPriority();
+                TaskPriority taskB=b.getTaskPriority();
+                if(taskA.getTaskPriorityValue()<taskB.getTaskPriorityValue())return 0;
+                return 1;
+                //  return taskA.getTaskPriorityValue().compareTo(b.getTaskPriority().getTaskPriorityValue());
+            }
+        };
+        return comparator;
+    }
     
 }

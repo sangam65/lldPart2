@@ -2,7 +2,7 @@ package taskManagementSystem.enums;
 
 public enum TaskStatus {
     YET_TO_START("YET_TO_START",0),
-    IN_PROGRESS(" IN_PROGRESS",1),
+    IN_PROGRESS("IN_PROGRESS",1),
     ON_HOLD("ON_HOLD",1),
     DONE("DONE",2);
     private final String statusCode;
