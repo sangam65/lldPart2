@@ -37,7 +37,7 @@ public class User {
         return currentTask;
     }
     public User( String name) {
-            if(name==null|name.isBlank()){
+            if(name==null||name.isBlank()){
                 throw new UserException("name can't be empty or null");
             }
         this.userId = UUID.randomUUID().toString();
@@ -51,6 +51,9 @@ public class User {
         if(task==null||task.getTaskStatus().equals(TaskStatus.DONE)){
             throw new TaskException("Task can't be added as task is null");
 
+        }
+        if(tasksToDo.contains(task)){
+            throw new TaskException("Task is already added to user");
         }
         tasksToDo.add(task);
     }
@@ -77,7 +80,7 @@ public class User {
              tasksToDo.remove(task);
              changeTask(task);
         }
-        throw new TaskException("This task can't be completed as the task is not done by user currently");
+       
     }
     private void changeTask(Task task){
         if(task==currentTask){

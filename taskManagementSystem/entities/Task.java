@@ -1,5 +1,6 @@
 package taskManagementSystem.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class Task {
         this.taskId=UUID.randomUUID().toString();
         this.taskStatus=TaskStatus.YET_TO_START;
         this.taskPriority=taskPriority!=null?taskPriority:TaskPriority.LOW;
+        this.comments=new ArrayList<>();
         
     }
     public String getTaskId() {
@@ -49,13 +51,15 @@ public class Task {
         return taskPriority;
     }
     public void setTaskPriority(TaskPriority taskPriority) {
+         throwExceptionWhenTaskDone();
         this.taskPriority = taskPriority;
     }
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
     public void setTaskStatus(TaskStatus taskStatus) {
-        if(taskStatus.getStatusValue()>this.taskStatus.getStatusValue()){
+        throwExceptionWhenTaskDone();
+        if(taskStatus.getStatusValue()<this.taskStatus.getStatusValue()){
             throw new TaskException("Task can't be go in backward state");
         }
         this.taskStatus = taskStatus;
@@ -67,18 +71,22 @@ public class Task {
          if(comment==null){
             throw new CommentException("Comment is null");
         }
-        this.comments .add(comment);
+        this.comments.add(comment);
     }
     public User getAssignee() {
         return assignee;
     }
     public void setAssignee(User assignee) {
-        if(this.taskStatus.equals(TaskStatus.DONE)){
-            throw new TaskException("Assignee can't be changed after task is completed");
-        }
-        if(assignee==null){
+         if(assignee==null){
             throw new UserException("Assignee can't be null");
         }
+        throwExceptionWhenTaskDone();
+        
+       
+        if(this.taskStatus.equals(TaskStatus.YET_TO_START)){
+            throw new TaskException("Assignee can't be changed when someone else has started the task");
+        }
+        
         if(this.assignee==null){
              this.assignee = assignee;            
         }
@@ -88,6 +96,11 @@ public class Task {
             this.assignee.addTask(this);
         }
 
+    }
+    private void throwExceptionWhenTaskDone(){
+         if(this.taskStatus.equals(TaskStatus.DONE)){
+            throw new TaskException("Assignee can't be changed after task is completed");
+        }
     }
    
     
