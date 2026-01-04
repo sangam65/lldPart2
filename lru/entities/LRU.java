@@ -1,13 +1,15 @@
 package lru.entities;
 
-import java.util.HashMap;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lru.exception.CapacityConstrainException;
 import lru.exception.KeyNotFoundException;
 
 public class LRU<K, V> {
     private final DoublyLinkedList<K, V> doublyLinkedList;
-    private final HashMap<K, Node<K, V>> hashMap;
+    private final Map<K, Node<K, V>> hashMap;
     private int capacity;
 
     public LRU(int capacity) {
@@ -16,7 +18,7 @@ public class LRU<K, V> {
         }
         this.doublyLinkedList = new DoublyLinkedList<>();
         this.capacity = capacity;
-        this.hashMap = new HashMap<>();
+        this.hashMap = new ConcurrentHashMap<>();
     }
 
     public int getCapacity() {

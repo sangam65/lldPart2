@@ -49,6 +49,9 @@ public class DoublyLinkedList<K, V> {
     }
 
     public Node<K, V> createNode(K key, V value) {
+        if(key==null||value==null){
+            throw new RuntimeException("Invalid input: key or value is invalid");
+        }
         return new Node<K, V>(key, value);
     }
 }
