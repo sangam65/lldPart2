@@ -34,7 +34,10 @@ public class User {
         return completedTask;
     }
     public Task getCurrentTask() {
-        return currentTask;
+        if(currentTask!=null){
+ return currentTask;
+        }
+        throw new TaskException("current task is null");
     }
     public User( String name) {
             if(name==null||name.isBlank()){

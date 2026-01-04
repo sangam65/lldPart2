@@ -98,14 +98,10 @@ public class Task {
             throw new TaskException("Assignee can't be changed when someone else has started the task");
         }
         
-        if(this.assignee==null){
-             this.assignee = assignee;            
+        if(this.assignee!=null&&this.assignee.equals(assignee)){
+            throw new TaskException("Task can't be assigned to same user");
         }
-        else{
-            this.assignee.removeTask(this);
-            this.assignee=assignee;
-            this.assignee.addTask(this);
-        }
+       this.assignee=assignee;
 
     }
     private void throwExceptionWhenTaskDone(){

@@ -115,4 +115,23 @@ public class TaskManagement {
 
     }
 
+
+    public synchronized void updateAssignee(Task task,User assignee){
+        if(task==null||assignee==null){
+            throw new TaskException("While assigning task to user , task and assignee can't be null");
+        }
+        if (!tasks.containsKey(task.getTaskId())) {
+            throw new TaskException("task is not added");
+        }
+        if (!users.containsKey(assignee.getUserId())) {
+            throw new UserException("user is not  added");
+        }
+        User currentAssignee=task.getAssignee();
+        task.setAssignee(assignee);
+        if(currentAssignee!=null){
+            currentAssignee.removeTask(task);
+
+        }
+        assignee.addTask(task);
+    }
 }
