@@ -78,6 +78,10 @@ public class TaskManagement {
             throw new TaskException("task is not added");
         }
         task.setTaskPriority(taskPriority);
+        User assignee=task.getAssignee();
+        if(assignee!=null){
+            assignee.taskPriorityChanged(task);
+        }
       
     }
 

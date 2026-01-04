@@ -110,7 +110,9 @@ public class User {
         }
     }
     private void changeTaskStatus(){
+         if(this.currentTask != null){
            this.currentTask.setTaskStatus(TaskStatus.IN_PROGRESS);
+       }
     }
     public void taskPriorityChanged(Task task){
          if(!tasksToDo.contains(task)){
