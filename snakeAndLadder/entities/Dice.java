@@ -1,9 +1,14 @@
 package snakeAndLadder.entities;
 
+import snakeAndLadder.exception.DiceException;
+
 public class Dice {
     private final int faces;
 
     public Dice(int faces) {
+        if(faces<=3){
+            throw new DiceException("Faces shall be minimum 4");
+        }
         this.faces = faces;
     }
 

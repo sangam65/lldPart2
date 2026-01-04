@@ -22,7 +22,9 @@ public class SnakeAndLadder {
     private GameStatus gameStatus;
 
     public SnakeAndLadder(Board board,Dice dice,List<Player> playerList){
+        
         checkPlayerValid(playerList);
+        
         this.players=new ArrayDeque<>();
         for(Player player:playerList){
             players.addLast(player);
@@ -41,6 +43,9 @@ public class SnakeAndLadder {
             if(player==null){
                 throw new InvalidPlayerException("Player can't be null");
             }
+        }
+        if(players.size()<2){
+            throw new InvalidPlayerException("Minimum players required to play the game is 2");
         }
     }
     public void rollDice() throws GameException{

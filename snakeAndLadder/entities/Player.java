@@ -1,9 +1,14 @@
 package snakeAndLadder.entities;
 
+import snakeAndLadder.exception.InvalidPlayerException;
+
 public class Player {
     private String name;
     private int position;
     public Player(String name) {
+        if(name==null||name.isBlank()){
+            throw new InvalidPlayerException("Player name can't be null or empty");
+        }
         this.name = name;
         this.position = 1;
     }
