@@ -60,13 +60,13 @@ public class SnakeAndLadder {
     }
     private void checkGameFinished(){
        if(gameStatus.equals(GameStatus.FINISHED)){
-            System.out.println("Game is already fnished");
-            throw new RuntimeException("Game is already fnished");
+            System.out.println("Game is already finished");
+            throw new RuntimeException("Game is already finished");
         }
     }
     public Player getWinningPlayer(){
         if(this.winningPlayer==null){
-            throw new InvalidPlayerException("Game is ongooing");
+            throw new InvalidPlayerException("Game is ongoing");
         }
         return this.winningPlayer;
     }

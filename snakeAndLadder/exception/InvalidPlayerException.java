@@ -1,7 +1,7 @@
 package snakeAndLadder.exception;
 
 public class InvalidPlayerException extends RuntimeException {
-    public InvalidPlayerException(String messgae){
-        super(messgae);
+    public InvalidPlayerException(String message){
+        super(message);
     }
 }
