@@ -84,7 +84,7 @@ public class Task {
         throwExceptionWhenTaskDone();
         
        
-        if(this.taskStatus.equals(TaskStatus.YET_TO_START)){
+        if(!this.taskStatus.equals(TaskStatus.YET_TO_START)){
             throw new TaskException("Assignee can't be changed when someone else has started the task");
         }
         
@@ -104,9 +104,7 @@ public class Task {
         }
     }
 
-    public static boolean compareTo(Task a,Task b){
-        return a.getTaskPriority().getTaskPriorityValue()<b.getTaskPriority().getTaskPriorityValue();
-    }
+   
    
     public static Comparator<Task> comparator(){
         Comparator<Task>comparator=new Comparator<Task>() {
@@ -114,7 +112,9 @@ public class Task {
             public int compare(Task a,Task b){
                 TaskPriority taskA=a.getTaskPriority();
                 TaskPriority taskB=b.getTaskPriority();
-                if(taskA.getTaskPriorityValue()<taskB.getTaskPriorityValue())return 0;
+                if(taskA.getTaskPriorityValue()<taskB.getTaskPriorityValue())return -1;
+                else if(taskA.getTaskPriorityValue()==taskB.getTaskPriorityValue())return 0;
+                else
                 return 1;
                 //  return taskA.getTaskPriorityValue().compareTo(b.getTaskPriority().getTaskPriorityValue());
             }

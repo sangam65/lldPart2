@@ -47,13 +47,16 @@ public class User {
         this.completedTask = new ArrayList<>();
         this.currentTask = null;
     }
-    public void addTask(Task task){
+    public  void addTask(Task task){
         if(task==null||task.getTaskStatus().equals(TaskStatus.DONE)){
             throw new TaskException("Task can't be added as task is null");
 
         }
         if(tasksToDo.contains(task)){
             throw new TaskException("Task is already added to user");
+        }
+        if(currentTask==null){
+            currentTask=task;
         }
         tasksToDo.add(task);
     }
