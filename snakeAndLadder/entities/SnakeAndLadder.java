@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.List;
 
 import snakeAndLadder.GameStatus;
+import snakeAndLadder.exception.GameException;
 import snakeAndLadder.exception.InvalidPlayerException;
 
 public class SnakeAndLadder {
@@ -42,7 +43,7 @@ public class SnakeAndLadder {
             }
         }
     }
-    public void rollDice() throws RuntimeException{
+    public void rollDice() throws GameException{
         checkGameFinished();
         Player player=players.pollFirst();
         int numberofDice=dice.rollDice();
@@ -61,7 +62,7 @@ public class SnakeAndLadder {
     private void checkGameFinished(){
        if(gameStatus.equals(GameStatus.FINISHED)){
             System.out.println("Game is already finished");
-            throw new RuntimeException("Game is already finished");
+            throw new GameException("Game is already finished");
         }
     }
     public Player getWinningPlayer(){

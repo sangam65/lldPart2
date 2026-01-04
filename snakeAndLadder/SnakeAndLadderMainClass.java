@@ -6,6 +6,7 @@ import snakeAndLadder.entities.Board;
 import snakeAndLadder.entities.Dice;
 import snakeAndLadder.entities.Player;
 import snakeAndLadder.entities.SnakeAndLadder;
+import snakeAndLadder.exception.GameException;
 
 public class SnakeAndLadderMainClass {
     public static void main(String []args){
@@ -24,7 +25,7 @@ public class SnakeAndLadderMainClass {
             try{
                 snakeAndLadder.rollDice();
             }
-            catch(RuntimeException e){
+            catch(GameException e){
                 player=snakeAndLadder.getWinningPlayer();
                 break;
             }

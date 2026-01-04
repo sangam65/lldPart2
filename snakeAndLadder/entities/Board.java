@@ -2,6 +2,7 @@ package snakeAndLadder.entities;
 
 import java.util.HashMap;
 
+import snakeAndLadder.exception.BoardException;
 import snakeAndLadder.exception.LadderAndSnakeInputException;
 
 public class Board {
@@ -9,6 +10,9 @@ public class Board {
     private final HashMap<Integer,Integer>snakes;
     private final int boardSize;
     public Board( int boardSize) {
+        if(boardSize<10){
+            throw new BoardException("Board size shall be minimum 10");
+        }
         this.ladder = new HashMap<>();
         this.snakes =new HashMap<>();
         this.boardSize = boardSize;
@@ -41,7 +45,7 @@ public class Board {
         }
         snakes.put(startPoint, endPoint);
     }
-    public void updatePlayerPositionIfPossible(Player player,int position){
+    public synchronized void updatePlayerPositionIfPossible(Player player,int position){
         int playerNextPosition=player.getPosition()+position;
         if(playerNextPosition>boardSize){
             System.out.println("Position is out of board so ,the player's position does not change,try on the next chance");
