@@ -1,5 +1,6 @@
 package lru.entities;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,14 +25,14 @@ public class LRU<K, V> {
         this.size=0;
         this.doublyLinkedList = new DoublyLinkedList<>();
         this.capacity = capacity;
-        this.hashMap = new ConcurrentHashMap<>();
+        this.hashMap = new HashMap<>();
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public V getValue(K key) {
+    public  V getValue(K key) {
 
         Node<K, V> node = getNodeFromKey(key);
         doublyLinkedList.moveToFront(node);
@@ -47,7 +48,7 @@ public class LRU<K, V> {
         return node;
     }
 
-    public void addValue(K key, V value)
+    public synchronized void addValue(K key, V value)
             throws NodeNullException, CapacityConstrainException, KeyNotFoundException {
 
             // if key exists already
@@ -56,7 +57,6 @@ public class LRU<K, V> {
                 existingNode.setValue(value);
                 hashMap.put(key, existingNode);
                 doublyLinkedList.moveToFront(existingNode);
-                this.size++;
                 return;
             }
             // if capacity reached then remove last node
@@ -82,7 +82,7 @@ public class LRU<K, V> {
 
     }
 
-    public  void removeKey(K key) throws KeyNotFoundException{
+    public synchronized  void removeKey(K key) throws KeyNotFoundException{
 
         Node<K, V> node = getNodeFromKey(key);
         hashMap.remove(key);
