@@ -42,7 +42,7 @@ public class SnakeAndLadder {
             }
         }
     }
-    public void rollDice(){
+    public void rollDice() throws RuntimeException{
         checkGameFinished();
         Player player=players.pollFirst();
         int numberofDice=dice.rollDice();

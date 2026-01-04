@@ -19,13 +19,18 @@ public class SnakeAndLadderMainClass {
         List<Player>players=List.of(player1,player2);
         SnakeAndLadder snakeAndLadder=new SnakeAndLadder(board, dice, players);
 
-        int count=0;
-        while(count<10){
-            count++;
-            snakeAndLadder.rollDice();
+    Player player;
+        while(true){
+            try{
+                snakeAndLadder.rollDice();
+            }
+            catch(RuntimeException e){
+                player=snakeAndLadder.getWinningPlayer();
+                break;
+            }
            
         }
-        Player player=snakeAndLadder.getWinningPlayer();
+       
         if(player!=null ){
             System.out.println(player.getName());
         }
