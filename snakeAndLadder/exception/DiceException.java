@@ -1,4 +1,4 @@
-package snakeAndLadder.exception;
+package snakeandladder.exception;
 
 public class DiceException extends RuntimeException {
     public DiceException(String message){

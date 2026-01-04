@@ -1,12 +1,12 @@
-package snakeAndLadder;
+package snakeandladder;
 
 import java.util.List;
 
-import snakeAndLadder.entities.Board;
-import snakeAndLadder.entities.Dice;
-import snakeAndLadder.entities.Player;
-import snakeAndLadder.entities.SnakeAndLadder;
-import snakeAndLadder.exception.GameException;
+import snakeandladder.entities.Board;
+import snakeandladder.entities.Dice;
+import snakeandladder.entities.Player;
+import snakeandladder.entities.SnakeAndLadder;
+import snakeandladder.exception.GameException;
 
 public class SnakeAndLadderMainClass {
     public static void main(String []args){

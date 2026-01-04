@@ -1,4 +1,4 @@
-package snakeAndLadder.exception;
+package snakeandladder.exception;
 
 public class LadderAndSnakeInputException extends RuntimeException{
     public LadderAndSnakeInputException(String message){

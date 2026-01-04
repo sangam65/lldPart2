@@ -1,14 +1,14 @@
-package taskManagementSystem.entities;
+package taskmanagementsystem.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import taskManagementSystem.enums.TaskPriority;
-import taskManagementSystem.enums.TaskStatus;
-import taskManagementSystem.exception.TaskException;
-import taskManagementSystem.exception.UserException;
+import taskmanagementsystem.enums.TaskPriority;
+import taskmanagementsystem.enums.TaskStatus;
+import taskmanagementsystem.exception.TaskException;
+import taskmanagementsystem.exception.UserException;
 
 public class TaskManagement {
     private final Map<String, User> users;

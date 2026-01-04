@@ -1,6 +1,6 @@
-package snakeAndLadder.entities;
+package snakeandladder.entities;
 
-import snakeAndLadder.exception.InvalidPlayerException;
+import snakeandladder.exception.InvalidPlayerException;
 
 public class Player {
     private String name;

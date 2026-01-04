@@ -1,4 +1,4 @@
-package snakeAndLadder.exception;
+package snakeandladder.exception;
 
 public class InvalidPlayerException extends RuntimeException {
     public InvalidPlayerException(String message){

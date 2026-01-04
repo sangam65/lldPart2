@@ -1,4 +1,4 @@
-package taskManagementSystem.enums;
+package taskmanagementsystem.enums;
 
 public enum TaskStatus {
     YET_TO_START("YET_TO_START",0),

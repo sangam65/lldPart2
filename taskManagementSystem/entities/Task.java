@@ -1,15 +1,15 @@
-package taskManagementSystem.entities;
+package taskmanagementsystem.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-import taskManagementSystem.enums.TaskPriority;
-import taskManagementSystem.enums.TaskStatus;
-import taskManagementSystem.exception.CommentException;
-import taskManagementSystem.exception.TaskException;
-import taskManagementSystem.exception.UserException;
+import taskmanagementsystem.enums.TaskPriority;
+import taskmanagementsystem.enums.TaskStatus;
+import taskmanagementsystem.exception.CommentException;
+import taskmanagementsystem.exception.TaskException;
+import taskmanagementsystem.exception.UserException;
 
 public class Task {
     private final String taskId;

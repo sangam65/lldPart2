@@ -1,12 +1,12 @@
-package snakeAndLadder.entities;
+package snakeandladder.entities;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-import snakeAndLadder.GameStatus;
-import snakeAndLadder.exception.GameException;
-import snakeAndLadder.exception.InvalidPlayerException;
+import snakeandladder.GameStatus;
+import snakeandladder.exception.GameException;
+import snakeandladder.exception.InvalidPlayerException;
 
 public class SnakeAndLadder {
     private final Board board;

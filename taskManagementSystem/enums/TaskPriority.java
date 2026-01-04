@@ -1,4 +1,4 @@
-package taskManagementSystem.enums;
+package taskmanagementsystem.enums;
 
 public enum TaskPriority {
     LOW("LOW",0),

@@ -1,4 +1,4 @@
-package snakeAndLadder;
+package snakeandladder;
 
 public enum GameStatus {
     IN_PROGRESS,

@@ -1,6 +1,6 @@
-package snakeAndLadder.entities;
+package snakeandladder.entities;
 
-import snakeAndLadder.exception.DiceException;
+import snakeandladder.exception.DiceException;
 
 public class Dice {
     private final int faces;

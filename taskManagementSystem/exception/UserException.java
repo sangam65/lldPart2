@@ -1,4 +1,4 @@
-package taskManagementSystem.exception;
+package taskmanagementsystem.exception;
 
 public class UserException extends RuntimeException{
     public UserException(String message){

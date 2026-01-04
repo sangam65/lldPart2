@@ -1,4 +1,4 @@
-package taskManagementSystem.exception;
+package taskmanagementsystem.exception;
 
 public class CommentException extends RuntimeException{
     public CommentException(String message){

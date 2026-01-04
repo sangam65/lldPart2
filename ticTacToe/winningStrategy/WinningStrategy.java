@@ -1,7 +1,7 @@
-package ticTacToe.winningStrategy;
+package tictactoe.winningStrategy;
 
-import ticTacToe.entities.Board;
-import ticTacToe.entities.Player;
+import tictactoe.entities.Board;
+import tictactoe.entities.Player;
 
 public interface WinningStrategy {
     boolean checkWinner(Player player,Board board);

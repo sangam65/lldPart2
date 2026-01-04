@@ -1,4 +1,4 @@
-package snakeAndLadder.exception;
+package snakeandladder.exception;
 
 public class BoardException extends RuntimeException {
     public BoardException(String message){

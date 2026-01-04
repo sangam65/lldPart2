@@ -1,8 +1,8 @@
-package ticTacToe.entities;
+package tictactoe.entities;
 
-import ticTacToe.enums.Symbol;
-import ticTacToe.exception.CellAlreadyOccupiedException;
-import ticTacToe.exception.CellOutOfBoundException;
+import tictactoe.enums.Symbol;
+import tictactoe.exception.CellAlreadyOccupiedException;
+import tictactoe.exception.CellOutOfBoundException;
 
 public class Board {
     private final int sz;

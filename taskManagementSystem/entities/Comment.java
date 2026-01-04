@@ -1,6 +1,6 @@
-package taskManagementSystem.entities;
+package taskmanagementsystem.entities;
 
-import taskManagementSystem.exception.CommentException;
+import taskmanagementsystem.exception.CommentException;
 
 public class Comment {
     private String comment;

@@ -1,9 +1,9 @@
-package snakeAndLadder.entities;
+package snakeandladder.entities;
 
 import java.util.HashMap;
 
-import snakeAndLadder.exception.BoardException;
-import snakeAndLadder.exception.LadderAndSnakeInputException;
+import snakeandladder.exception.BoardException;
+import snakeandladder.exception.LadderAndSnakeInputException;
 
 public class Board {
     private final HashMap<Integer,Integer> ladder;

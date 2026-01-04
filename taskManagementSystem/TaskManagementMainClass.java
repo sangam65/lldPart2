@@ -1,9 +1,9 @@
-package taskManagementSystem;
+package taskmanagementsystem;
 
-import taskManagementSystem.entities.Task;
-import taskManagementSystem.entities.TaskManagement;
-import taskManagementSystem.entities.User;
-import taskManagementSystem.enums.TaskPriority;
+import taskmanagementsystem.entities.Task;
+import taskmanagementsystem.entities.TaskManagement;
+import taskmanagementsystem.entities.User;
+import taskmanagementsystem.enums.TaskPriority;
 
 public class TaskManagementMainClass {
     public static void main(String[] args) {

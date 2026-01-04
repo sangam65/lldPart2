@@ -1,6 +1,6 @@
-package ticTacToe.entities;
+package tictactoe.entities;
 
-import ticTacToe.enums.Symbol;
+import tictactoe.enums.Symbol;
 
 public class Player {
     private String name;

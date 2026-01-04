@@ -1,4 +1,4 @@
-package snakeAndLadder.exception;
+package snakeandladder.exception;
 
 public class GameException extends RuntimeException {
     public GameException(String message){

@@ -1,4 +1,4 @@
-package taskManagementSystem.exception;
+package taskmanagementsystem.exception;
 
 public class TaskException  extends RuntimeException{
     public TaskException(String message){

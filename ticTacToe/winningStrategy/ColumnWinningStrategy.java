@@ -1,8 +1,8 @@
-package ticTacToe.winningStrategy;
+package tictactoe.winningStrategy;
 
-import ticTacToe.entities.Board;
-import ticTacToe.entities.Player;
-import ticTacToe.enums.Symbol;
+import tictactoe.entities.Board;
+import tictactoe.entities.Player;
+import tictactoe.enums.Symbol;
 
 public class ColumnWinningStrategy implements WinningStrategy{
 
