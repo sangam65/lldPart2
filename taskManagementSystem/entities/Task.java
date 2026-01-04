@@ -68,6 +68,9 @@ public class Task {
         return taskStatus;
     }
     public void setTaskStatus(TaskStatus taskStatus) {
+        if(taskStatus==null){
+            throw new TaskException("Task status can't be null");
+        }
         throwExceptionWhenTaskDone();
         if(taskStatus.getStatusValue()<this.taskStatus.getStatusValue()){
             throw new TaskException("Task can't be go in backward state");
