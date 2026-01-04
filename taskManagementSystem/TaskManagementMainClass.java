@@ -38,6 +38,10 @@ public class TaskManagementMainClass {
         // Complete and show next task
         tm.completeTask(user1.getCurrentTask());
         // tm.updateAssignee(task2, user1);
+        if(user1.getCurrentTask()==null){
+            System.out.println("All tasks completed "+user1.getName());
+        }
+        else
         System.out.println("Next Task: " + user1.getCurrentTask().getTaskName());
     }
 }
