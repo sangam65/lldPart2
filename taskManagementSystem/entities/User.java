@@ -48,10 +48,10 @@ public class User {
         this.currentTask = null;
     }
     public  void addTask(Task task){
-        if(task==null||task.getTaskStatus().equals(TaskStatus.DONE)){
+      if(task==null||task.getTaskStatus().equals(TaskStatus.DONE)){
             throw new TaskException("Task can't be added as task is null");
 
-        }
+        }  
         if(tasksToDo.contains(task)){
             throw new TaskException("Task is already added to user");
         }
@@ -111,5 +111,21 @@ public class User {
     }
     private void changeTaskStatus(){
            this.currentTask.setTaskStatus(TaskStatus.IN_PROGRESS);
+    }
+    public void taskPriorityChanged(Task task){
+         if(!tasksToDo.contains(task)){
+                throw new TaskException("Task is not given to the user");
+        }
+        if(task==null){
+            throw new TaskException("Task can't be added as task is null");
+
+        }  
+        if(task!=currentTask){
+             if(currentTask.getTaskPriorityValue()<task.getTaskPriorityValue()){
+                currentTask.setTaskStatus(TaskStatus.ON_HOLD);
+                currentTask=task;
+                 changeTaskStatus();
+            }
+        }
     }
 }

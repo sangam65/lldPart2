@@ -60,6 +60,9 @@ public class Task {
     public void setTaskPriority(TaskPriority taskPriority) {
          throwExceptionWhenTaskDone();
         this.taskPriority = taskPriority;
+        if(this.assignee!=null){
+            this.assignee.taskPriorityChanged(this);
+        }
     }
     public TaskStatus getTaskStatus() {
         return taskStatus;

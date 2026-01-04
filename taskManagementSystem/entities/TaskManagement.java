@@ -71,19 +71,22 @@ public class TaskManagement {
         }
     }
 
-    public synchronized void updateTaskStatus(Task task, TaskStatus taskStatus) {
-        if (!tasks.containsKey(task.getTaskId())) {
-            throw new TaskException("task is not added");
-        }
+    // public synchronized void updateTaskStatus(Task task, TaskStatus taskStatus) {
+    //     if (!tasks.containsKey(task.getTaskId())) {
+    //         throw new TaskException("task is not added");
+    //     }
 
-        task.setTaskStatus(taskStatus);
-    }
+    //     task.setTaskStatus(taskStatus);
+    // }
 
     public synchronized void updateTaskPriority(Task task, TaskPriority taskPriority) {
         if (!tasks.containsKey(task.getTaskId())) {
             throw new TaskException("task is not added");
         }
         task.setTaskPriority(taskPriority);
+        // if(task.getAssignee()!=null){
+           
+        // }
     }
 
     public synchronized void completeTask(Task task){
