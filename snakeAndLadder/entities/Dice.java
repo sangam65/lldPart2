@@ -16,10 +16,9 @@ public class Dice {
         return faces;
     }
     public int rollDice(){
-        int random=(int)(Math.random()*faces);
-        int rolling=random%faces;
-        rolling=rolling==0?faces:rolling;
-        return rolling;
+  
+
+        return (int)(Math.random() * faces) + 1;
     }
 
     
