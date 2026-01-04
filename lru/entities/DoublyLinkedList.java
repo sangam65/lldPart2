@@ -14,11 +14,14 @@ public class DoublyLinkedList<K, V> {
 
     }
 
-    public void addFirst(Node<K,V>node) {
-        if(head==null){
-            throw new NodeNullException("head node is null");
+    public void addFirst(Node<K,V>node) throws NodeNullException{
+        if(head==null||tail==null){
+            throw new NodeNullException("head or tail node is null");
         }
         Node<K, V> headNext = head.getNext();
+        if(headNext==null){
+            throw new NodeNullException("Head's next can't be null");
+        }
         head.setNext(node);
         node.setNext(headNext);
         node.setPrev(head);
@@ -38,7 +41,7 @@ public class DoublyLinkedList<K, V> {
         addFirst(node);
     }
 
-    public Node<K, V> getLast() {
+    public Node<K, V> getLast() throws NodeNullException{
         if(tail==null){
                throw new NodeNullException("tail node is null");
         }
@@ -48,7 +51,7 @@ public class DoublyLinkedList<K, V> {
         return null;
     }
 
-    public Node<K, V> createNode(K key, V value) {
+    public Node<K, V> createNode(K key, V value)throws RuntimeException {
         if(key==null||value==null){
             throw new RuntimeException("Invalid input: key or value is invalid");
         }
