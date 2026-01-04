@@ -1,3 +1,4 @@
+package ticTacToe.enums;
 public enum Symbol {
     EMPTY,
     X,

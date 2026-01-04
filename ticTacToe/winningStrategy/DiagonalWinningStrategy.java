@@ -1,3 +1,9 @@
+package ticTacToe.winningStrategy;
+
+import ticTacToe.entities.Board;
+import ticTacToe.entities.Player;
+import ticTacToe.enums.Symbol;
+
 public class DiagonalWinningStrategy  implements WinningStrategy{
      @Override
     public boolean checkWinner(Player player, Board board) {

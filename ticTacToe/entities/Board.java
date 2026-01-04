@@ -1,3 +1,9 @@
+package ticTacToe.entities;
+
+import ticTacToe.enums.Symbol;
+import ticTacToe.exception.CellAlreadyOccupiedException;
+import ticTacToe.exception.CellOutOfBoundException;
+
 public class Board {
     private final int sz;
     private final Cell cell[][];

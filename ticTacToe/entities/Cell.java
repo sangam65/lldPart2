@@ -1,3 +1,7 @@
+package ticTacToe.entities;
+
+import ticTacToe.enums.Symbol;
+
 public class Cell {
      private Symbol symbol;
     public Cell(Symbol symbol){

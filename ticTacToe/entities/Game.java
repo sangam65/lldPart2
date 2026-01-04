@@ -1,6 +1,17 @@
+
+package ticTacToe.entities;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+
+import ticTacToe.enums.GameStatus;
+import ticTacToe.exception.CellAlreadyOccupiedException;
+import ticTacToe.exception.CellOutOfBoundException;
+import ticTacToe.winningStrategy.ColumnWinningStrategy;
+import ticTacToe.winningStrategy.DiagonalWinningStrategy;
+import ticTacToe.winningStrategy.RowWinningStrategy;
+import ticTacToe.winningStrategy.WinningStrategy;
 
 public class Game {
     private final Deque<Player>players;
