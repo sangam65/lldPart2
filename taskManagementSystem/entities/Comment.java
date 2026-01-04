@@ -9,7 +9,7 @@ public class Comment {
     
     public Comment(String comment, User user, Task task) {
         if(comment==null||comment.isBlank()||user==null||task==null){
-            throw new CommentException("Either commment or user or task is null which makes this an invalid comment");
+            throw new CommentException("Either comment or user or task is null which makes this an invalid comment");
         }
         this.comment = comment;
         this.user = user;

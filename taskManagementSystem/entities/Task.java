@@ -40,12 +40,18 @@ public class Task {
         return taskName;
     }
     public void setTaskName(String taskName) {
+                if(taskName==null||taskName.isBlank()){
+            throw new TaskException("Task name is invalid");
+        }
         this.taskName = taskName;
     }
     public String getTaskDescription() {
         return taskDescription;
     }
     public void setTaskDescription(String taskDescription) {
+                if(taskDescription==null||taskDescription.isBlank()){
+            throw new TaskException("Task description is invalid");
+        }
         this.taskDescription = taskDescription;
     }
     public TaskPriority getTaskPriority() {
