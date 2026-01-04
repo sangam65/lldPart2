@@ -93,8 +93,15 @@ public class TaskManagement {
         if(completedTasks.containsKey(task.getTaskId())){
             throw new TaskException("Task is already completed");
         }
-        task.setTaskStatus(TaskStatus.DONE);
         User user=task.getAssignee();
+        if(user==null){
+            throw new TaskException("Task can't be completed yet as task is not given to user");
+        }
+        if(user.getCurrentTask()==null||!user.getCurrentTask().equals(task)){
+            throw new TaskException("Task can't be completed yet as user is currently doing some other task");
+        }
+        task.setTaskStatus(TaskStatus.DONE);
+    
         user.completeTask(task);
         completedTasks.put(task.getTaskId(),task);
         tasks.remove(task.getTaskId());
