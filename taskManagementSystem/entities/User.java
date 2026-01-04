@@ -55,11 +55,12 @@ public class User {
         if(tasksToDo.contains(task)){
             throw new TaskException("Task is already added to user");
         }
+        tasksToDo.add(task);
         if(currentTask==null){
             currentTask=task;
             changeTaskStatus();
         }
-        tasksToDo.add(task);
+        
     }
     public void removeTask(Task task){
         if(!tasksToDo.contains(task)){
