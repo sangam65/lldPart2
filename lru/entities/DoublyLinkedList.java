@@ -14,7 +14,7 @@ public class DoublyLinkedList<K, V> {
 
     }
 
-    public synchronized void addFirst(Node<K,V>node) throws NodeNullException{
+    public void addFirst(Node<K,V>node) throws NodeNullException{
         if(head==null||tail==null){
             throw new NodeNullException("head or tail node is null");
         }
@@ -30,7 +30,7 @@ public class DoublyLinkedList<K, V> {
 
     }
 
-    public synchronized void remove(Node<K, V> node)throws NodeNullException {
+    public  void remove(Node<K, V> node)throws NodeNullException {
         if(node==null){
             throw new NodeNullException("Removal node can't be null");
         }
@@ -59,7 +59,7 @@ public class DoublyLinkedList<K, V> {
         return null;
     }
 
-    public  synchronized Node<K, V> createNode(K key, V value)throws RuntimeException {
+    public  Node<K, V> createNode(K key, V value)throws RuntimeException {
         if(key==null||value==null){
             throw new RuntimeException("Invalid input: key or value is invalid");
         }

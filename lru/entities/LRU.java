@@ -31,7 +31,7 @@ public class LRU<K, V> {
         return capacity;
     }
 
-    public  V getValue(K key) {
+    public synchronized V getValue(K key) {
 
         Node<K, V> node = getNodeFromKey(key);
         doublyLinkedList.moveToFront(node);
