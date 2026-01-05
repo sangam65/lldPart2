@@ -1,27 +1,30 @@
 package hashmap.entities;
 
-
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import hashmap.exception.KeyException;
 
 public class HashMapImpl<K, V> {
-   
 
-    private int capacity;
-    private int size;
-    private Pair<K,V> arrays[];
+    private static int capacity = 4;
+    private static int maxCapacity = 1 << capacity;
+    private AtomicInteger size;
+    private final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
+
+    private Pair<K, V>[] arrays;
 
     @SuppressWarnings("unchecked")
-    public HashMapImpl  () {
+    public HashMapImpl() {
         System.out.println("object creation through constructor");
-        this.capacity = 4;
-        this.size = 0;
-        this.arrays = new Pair[1<<this.capacity];
-        System.out.println("value {}"+this.arrays[1]);
+
+        this.size = new AtomicInteger(0);
+        this.arrays = new Pair[maxCapacity];
+        System.out.println("value {}" + this.arrays[1]);
 
     }
 
-    public int getSize() {
+    public AtomicInteger getSize() {
         return size;
     }
 
@@ -31,56 +34,80 @@ public class HashMapImpl<K, V> {
     // private
 
     public void put(K key, V value) {
-        Pair<K,V> oldPair = indexOfkeyExists(key);
-        if (oldPair != null) {
+        try {
+            reentrantReadWriteLock.writeLock().lock();
+            ;
+            Pair<K, V> oldPair = indexOfkeyExists(key);
+            if (oldPair != null) {
 
-            oldPair.setV(value);
-            return;
-        } else {
+                oldPair.setV(value);
+                return;
+            } else {
+                capapcityReached();
+                Pair<K, V> newPair = new Pair<K, V>(key, value);
+                int newInd = calculateKey(key);
 
-            Pair<K,V> newPair = new Pair<K,V>(key, value);
-            int newInd = calculateKey(key);
-
-            if(arrays[newInd]==null){
-                arrays[newInd]=newPair;
-            }
-            else{
-                Pair<K,V> curPair=arrays[newInd];
-                while(curPair.getNext()!=null){
-                    curPair=curPair.next;
+                if (arrays[newInd] == null) {
+                    arrays[newInd] = newPair;
+                } else {
+                    Pair<K, V> curPair = arrays[newInd];
+                    while (curPair.getNext() != null) {
+                        curPair = curPair.next;
+                    }
+                    curPair.setNext(newPair);
                 }
-                curPair.setNext(newPair);
-            }
-            this.size++;
+                this.size.incrementAndGet();
 
+            }
         }
+
+        finally {
+            reentrantReadWriteLock.writeLock().unlock();
+        }
+
     }
 
     public V getValue(K key) {
-        Pair<K,V> pair = indexOfkeyExists(key);
-        if (pair == null) {
-            throw new KeyException("key does not exist");
+        try {
+            reentrantReadWriteLock.readLock().lock();
+            Pair<K, V> pair = indexOfkeyExists(key);
+            if (pair == null) {
+                throw new KeyException("key does not exist");
+            }
+
+            return pair.getV();
         }
 
-        return pair.getV();
+        finally {
+            reentrantReadWriteLock.readLock().unlock();
+        }
+
     }
 
     public void removeKey(K key) {
-        Pair<K,V> pair = indexOfkeyExists(key);
-        
-        if (pair == null) {
-            throw new KeyException("key does not exist");
+        try {
+            reentrantReadWriteLock.writeLock().lock();
+            Pair<K, V> pair = indexOfkeyExists(key);
+
+            if (pair == null) {
+                throw new KeyException("key does not exist");
+            }
+            int ind = calculateKey(key);
+            Pair<K, V> prevPair = arrays[ind];
+            if (prevPair == pair) {
+                arrays[ind] = null;
+                this.size.decrementAndGet();
+                return;
+            }
+            while (prevPair.next != pair) {
+                prevPair = prevPair.next;
+            }
+            prevPair.setNext(pair.getNext());
+            this.size.decrementAndGet();
+
+        } finally {
+            reentrantReadWriteLock.writeLock().unlock();
         }
-        int ind=calculateKey(key);
-        Pair<K,V> prevPair=arrays[ind];
-        if(prevPair==pair){
-            arrays[ind]=null;
-            return;
-        }
-        while(prevPair.next!=pair){
-            prevPair=prevPair.next;
-        }
-        prevPair.setNext(null);
 
         // arrays.set(ind, null);
 
@@ -88,17 +115,17 @@ public class HashMapImpl<K, V> {
     }
 
     private int calculateKey(K key) {
-        int totalCap = 1 << capacity;
-        int keyCode = key.hashCode();
-        int ind = keyCode % totalCap;
-        System.out.println("key "+key+" keyCode "+keyCode);
+
+        int keyCode = Math.abs(key.hashCode());
+        int ind = keyCode & (maxCapacity - 1);
+        System.out.println("key " + key + " keyCode " + keyCode);
         return ind;
     }
 
-    private Pair<K,V> indexOfkeyExists(K key) {
+    private Pair<K, V> indexOfkeyExists(K key) {
         int ind = calculateKey(key);
 
-        Pair<K,V> pair = arrays[ind];
+        Pair<K, V> pair = arrays[ind];
         while (pair != null) {
             if (pair.getK().equals(key)) {
                 return pair;
@@ -109,22 +136,51 @@ public class HashMapImpl<K, V> {
         return null;
     }
 
+    private void capapcityReached() {
+        int curSize = this.size.get();
+        if (maxCapacity * 3 != curSize * 4) {
+            System.out.println("Not 75% filled so doing nothing");
+            return;
+        }
+        int oldMaxCapacity = maxCapacity;
+        capacity++;
+        maxCapacity = 1 << capacity;
+        @SuppressWarnings("unchecked")
+        Pair<K, V>[] newArrays = new Pair[maxCapacity];
+        for (int i = 0; i < oldMaxCapacity; i++) {
+            Pair<K, V> current = arrays[i];
 
-     @SuppressWarnings("hiding")
-    private class Pair<K,V> {
+            while (current != null) {
+                Pair<K, V> nextNode = current.getNext();
+
+                int newInd = calculateKey(current.getK());
+
+                current.setNext(newArrays[newInd]);
+                newArrays[newInd] = current;
+
+                current = nextNode;
+            }
+        }
+        this.arrays = newArrays;
+        System.out.println("75% filled so doubling size");
+
+    }
+
+    @SuppressWarnings("hiding")
+    private class Pair<K, V> {
         private final K k;
         private V v;
-        private Pair<K,V> next;
+        private Pair<K, V> next;
 
         public K getK() {
             return k;
         }
 
-        public Pair<K,V> getNext() {
+        public Pair<K, V> getNext() {
             return next;
         }
 
-        public void setNext(Pair<K,V> next) {
+        public void setNext(Pair<K, V> next) {
             this.next = next;
         }
 
