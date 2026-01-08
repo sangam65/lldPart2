@@ -1,25 +1,22 @@
-package parkinglot.entities.vehciles;
+package parkinglot.entities.vehicles;
 
 import parkinglot.enums.VehicleType;
 
-public class Bike  implements VehcileInterface{
-    private final VehicleType vehicleType;
+public class Car implements VehicleInterface {
+       private final VehicleType vehicleType;
     private final String vehicleNumber;
    
     private final int wheels;
-
-    public Bike( ) {
-        this.vehicleType = VehicleType.BIKE;
-        this.vehicleNumber =VehcileInterface.generate();
-        this.wheels = 2;
+     public Car(String vehicleNumber) {
+        this.vehicleType = VehicleType.CAR;
+        this.vehicleNumber =vehicleNumber;
+        this.wheels = 4;
     }
 
     @Override
     public VehicleType getVehcileType() {
-       return vehicleType;
+        return vehicleType;
     }
-
-    
 
     @Override
     public int getWheels() {
@@ -30,6 +27,5 @@ public class Bike  implements VehcileInterface{
     public String getVehcileNumber() {
         return vehicleNumber;
     }
-    
 
 }
