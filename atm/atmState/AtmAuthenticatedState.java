@@ -23,8 +23,12 @@ public class AtmAuthenticatedState implements AtmInterface {
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card, Currency currency, int balance) {
+    public synchronized void withDrawCash(Bank bank, Card card, Currency currency, int balance) {
         try {
+              int bankBalance = bank.checkBalance(card);
+              if(bankBalance<balance){
+                throw new BankException("Insufficient balance");
+              }
             boolean cashDispense=currency.reserveAndValidate(balance);
             if(cashDispense==false){
                 throw new BankException("Bank does not have enough balance to dispense this money");
@@ -46,7 +50,7 @@ public class AtmAuthenticatedState implements AtmInterface {
     }
 
     @Override
-    public void checkBalance(Bank bank, Card card) {
+    public synchronized void checkBalance(Bank bank, Card card) {
         try {
             int balance = bank.checkBalance(card);
             System.out.println("balance " + balance);

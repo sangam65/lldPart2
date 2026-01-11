@@ -63,7 +63,7 @@ public abstract class Currency {
 
         balance -= (notes * money);
 
-        this.count -= notes;
+       
         System.out.println("notes of " + currencyType + " " + notes);
 
         if (balance == 0)
