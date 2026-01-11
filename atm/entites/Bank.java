@@ -117,10 +117,6 @@ public class Bank {
         try {
             synchronized (this) {
                 Account account = accounts.get(card.getCardId());
-                if (account.getBalance() < balance) {
-                    throw new AccountException("You don't have sufficient balance");
-
-                }
                 int currentBalance = account.getBalance();
                 int remainingBalance = currentBalance - balance;
                 account.setBalance(remainingBalance);
