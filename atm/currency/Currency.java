@@ -1,9 +1,14 @@
 package atm.currency;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public abstract class Currency {
     private final Currency next;
     private int count;
     private final CurrencyType currencyType;
+    private final ReentrantReadWriteLock readWriteLock=new ReentrantReadWriteLock();
 
     public CurrencyType getCurrencyType() {
         return currencyType;
@@ -47,9 +52,10 @@ public abstract class Currency {
             int money = currencyType.getValue();
 
         int notes = balance / money;
-        System.out.println("notes of "+currencyType+" "+notes);
+       
           balance -= (notes * money);
           this.count-=notes;
+           System.out.println("notes of "+currencyType+" "+notes);
         if (balance == 0)
             return ;
         next.canProcess(balance);
