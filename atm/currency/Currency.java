@@ -1,14 +1,12 @@
 package atm.currency;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public abstract class Currency {
     private final Currency next;
     private int count;
     private final CurrencyType currencyType;
-    private final ReentrantReadWriteLock readWriteLock=new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
 
     public CurrencyType getCurrencyType() {
         return currencyType;
@@ -33,7 +31,9 @@ public abstract class Currency {
     }
 
     public  boolean canProcess(int balance) {
-        int money = currencyType.getValue();
+        try{
+            reentrantReadWriteLock.writeLock().lock();
+            int money = currencyType.getValue();
 
         int notes = balance / money;
         if (notes > count) {
@@ -45,27 +45,43 @@ public abstract class Currency {
         if (next == null)
             return false;
         return next.canProcess(balance);
+        }
+        finally{
+            reentrantReadWriteLock.writeLock().unlock();
+        }
+        
 
     }
 
-    public  void displayNotes(int balance) {
+    public void displayNotes(int balance) {
+        try {
+            reentrantReadWriteLock.writeLock().lock();
+            
             int money = currencyType.getValue();
 
-        int notes = balance / money;
-       
-          balance -= (notes * money);
-          this.count-=notes;
-           System.out.println("notes of "+currencyType+" "+notes);
-        if (balance == 0)
-            return ;
-        next.canProcess(balance);
+            int notes = balance / money;
+
+            balance -= (notes * money);
+            this.count -= notes;
+            System.out.println("notes of " + currencyType + " " + notes);
+            if (balance == 0)
+                return;
+            next.displayNotes(balance);
+        } catch (Exception e) {
+
+        } finally {
+            reentrantReadWriteLock.writeLock().unlock();
+        }
+
     }
-    public synchronized boolean addCurrency(CurrencyType currencyType,int count){
-        if(this.currencyType.equals(currencyType)){
-            this.count+=count;
+
+    public synchronized boolean addCurrency(CurrencyType currencyType, int count) {
+        if (this.currencyType.equals(currencyType)) {
+            this.count += count;
             return true;
         }
-        if(next==null)return false;
+        if (next == null)
+            return false;
         return next.addCurrency(currencyType, count);
     }
 }
