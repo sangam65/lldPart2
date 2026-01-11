@@ -10,33 +10,13 @@ public class Bank {
     private final String bankId;
     private HashMap<String, Account> accounts;
 
+
     public Bank() {
         this.bankId = UUID.randomUUID().toString();
         this.accounts = new HashMap<>();
     }
 
-    public class Card {
-        private final String cardId;
-        private int pin;
-
-        public String getCardId() {
-            return cardId;
-        }
-
-        public Card(int pin) {
-            this.cardId = UUID.randomUUID() + bankId.substring(bankId.length() - 4);
-            this.pin = pin;
-        }
-
-        private int getPin() {
-            return pin;
-        }
-
-        private void setPin(int pin) {
-            this.pin = pin;
-        }
-
-    }
+    
 
     class Account {
         private final String accountId;
@@ -83,7 +63,7 @@ public class Bank {
             throw new AccountException("Pin shall be positive number of 4 digitd");
         }
 
-        Card card = new Card(pin);
+        Card card = new Card(this,pin);
         Account account = new Account(balance, card);
         accounts.put(card.getCardId(), account);
         return account;

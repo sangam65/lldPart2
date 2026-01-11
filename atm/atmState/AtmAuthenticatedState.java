@@ -5,7 +5,7 @@ import java.util.HashMap;
 import atm.currency.Currency;
 import atm.currency.CurrencyType;
 import atm.entites.Bank;
-import atm.entites.Bank.Card;
+import atm.entites.Card;
 import atm.exception.AccountException;
 
 public class AtmAuthenticatedState implements AtmInterface{
@@ -24,7 +24,7 @@ public class AtmAuthenticatedState implements AtmInterface{
     @Override
     public void withDrawCash(Bank bank, Card card,int balance,AtmInterface currentState) {
         try{
-            
+
             bank.withDrawCash(card, balance);
             
         }

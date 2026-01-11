@@ -8,7 +8,8 @@ import java.util.HashMap;
 import atm.currency.Currency;
 import atm.currency.CurrencyType;
 import atm.entites.Bank;
-import atm.entites.Bank.Card;
+import atm.entites.Card;
+
 
 public interface AtmInterface {
 

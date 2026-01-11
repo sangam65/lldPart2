@@ -7,7 +7,7 @@ import atm.atmState.AtmInterface;
 import atm.atmState.NoCardState;
 import atm.currency.Currency;
 import atm.entites.Bank;
-import atm.entites.Bank.Card;
+import atm.entites.Card;
 import atm.exception.AccountException;
 import atm.exception.BankException;
 
@@ -27,7 +27,7 @@ public class AtmClass {
     public synchronized void addBank(Bank bank) throws BankException{
         atmState.addBank(bank, bankList,atmState);
     }
-    public synchronized void insertcard(Card card) throws BankException{
+    public synchronized void insertcard(atm.entites.Card card) throws BankException{
         Bank bank=findBankAssociatedWithCard(card);
         this.bankOfInsertedCard=bank;
         this.insertedCard=card;
