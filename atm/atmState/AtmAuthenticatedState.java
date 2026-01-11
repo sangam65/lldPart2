@@ -8,51 +8,47 @@ import atm.entites.Bank;
 import atm.entites.Card;
 import atm.exception.AccountException;
 
-public class AtmAuthenticatedState implements AtmInterface{
+public class AtmAuthenticatedState implements AtmInterface {
 
     @Override
     public void insertCard(Card card) {
-                throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
+        throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
     }
 
     @Override
     public boolean enterPin(Bank bank, Card card, int pin) {
-      
-            throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
+
+        throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card,Currency currency,int balance) {
-        try{
-
+    public void withDrawCash(Bank bank, Card card, Currency currency, int balance) {
+        try {
+            currency.canProcess(balance);
             bank.withDrawCash(card, balance);
             currency.displayNotes(balance);
-            
-        }
-        catch(AccountException e){
-            System.out.println(e.getMessage());
-            
 
-            
+        } catch (AccountException e) {
+            System.out.println(e.getMessage());
+
         }
 
     }
 
     @Override
     public void deposit(Currency currency, CurrencyType currencyType, int count) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'deposit'");
     }
 
     @Override
     public void checkBalance(Bank bank, Card card) {
-       try{
-        int balance= bank.checkBalance(card);
-       System.out.println("balance "+balance);
-       }
-       catch(Exception e){
+        try {
+            int balance = bank.checkBalance(card);
+            System.out.println("balance " + balance);
+        } catch (Exception e) {
 
-       }
+        }
     }
 
     @Override
@@ -60,12 +56,5 @@ public class AtmAuthenticatedState implements AtmInterface{
 
         throw new UnsupportedOperationException("Unimplemented method 'addBank'");
     }
-
-    
-
-    
-    
-
-    
 
 }

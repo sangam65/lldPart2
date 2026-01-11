@@ -1,7 +1,6 @@
 package atm.entites;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import atm.exception.AccountException;
@@ -16,9 +15,7 @@ public class Bank {
         this.bankId = UUID.randomUUID().toString();
         this.accounts = new HashMap<>();
     }
-    public List<Account> getAllAccounts(){
-        return accounts.values().stream().filter(null).toList();
-    }
+    
 
     
 
@@ -73,24 +70,24 @@ public class Bank {
         return account;
     }
 
-    public void changePin(Card card, int pin) throws AccountException {
+    // public void changePin(Card card, int pin) throws AccountException {
 
-        if (pin < 1000 || pin >= 10000) {
-            throw new AccountException("Pin shall be positive number of 4 digitd");
-        }
-        if (!accounts.containsKey(card.getCardId())) {
-            throw new AccountException("Card number is invalid");
-        }
-        try {
-            synchronized (this) {
-                card.setPin(pin);
+    //     if (pin < 1000 || pin >= 10000) {
+    //         throw new AccountException("Pin shall be positive number of 4 digitd");
+    //     }
+    //     if (!accounts.containsKey(card.getCardId())) {
+    //         throw new AccountException("Card number is invalid");
+    //     }
+    //     try {
+    //         synchronized (this) {
+    //             card.setPin(pin);
 
-            }
-        } catch (Exception e) {
+    //         }
+    //     } catch (Exception e) {
 
-        }
+    //     }
 
-    }
+    // }
     public int checkBalance(Card card) throws AccountException {
 
         

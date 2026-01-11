@@ -2,6 +2,7 @@ package atm;
 
 import java.util.HashMap;
 
+
 import atm.atmState.AtmAuthenticatedState;
 import atm.atmState.AtmInterface;
 import atm.atmState.HasCardState;
@@ -10,6 +11,7 @@ import atm.currency.Currency;
 import atm.entites.Bank;
 import atm.entites.Card;
 import atm.exception.AccountException;
+import atm.exception.AtmException;
 import atm.exception.BankException;
 
 public class AtmClass {
@@ -33,7 +35,10 @@ public class AtmClass {
 
     }
 
-    public synchronized void insertcard(Card card) throws BankException {
+    public synchronized void insertcard(Card card) throws AtmException,BankException {
+        if(this.insertedCard!=null){
+            throw new AtmException("Card is already inserted");
+        }
         Bank bank = findBankAssociatedWithCard(card);
         this.bankOfInsertedCard = bank;
         this.insertedCard = card;
@@ -52,21 +57,37 @@ public class AtmClass {
     }
 
     public synchronized boolean matchPin(int pin) throws AccountException {
-        atmState.enterPin(bankOfInsertedCard, insertedCard, pin);
-        this.atmState = new AtmAuthenticatedState();
-        return true;
+        boolean pinMatched= atmState.enterPin(bankOfInsertedCard, insertedCard, pin);
+        if(pinMatched==true){
+            this.atmState = new AtmAuthenticatedState();
+            return true;
+        }
+        else{
+            this.atmState=new NoCardState();
+            setBankAndCardNull();
+            
+            return false;
+        }
+        
     }
 
     public synchronized void checkBalance() {
         atmState.checkBalance(bankOfInsertedCard, insertedCard);
         System.out.println("ejecting card");
         this.atmState = (new NoCardState());
+         setBankAndCardNull();
     }
 
     public synchronized void withDrawBalance(int balanace) throws AccountException {
         currency.canProcess(balanace);
         atmState.withDrawCash(bankOfInsertedCard, insertedCard,currency, balanace);
-        System.out.println("ejecting card");
+       
         this.atmState=new NoCardState();
+        setBankAndCardNull();
+    }
+    private void setBankAndCardNull(){
+         System.out.println("ejecting card");
+        this.bankOfInsertedCard=null;
+        this.insertedCard=null;
     }
 }

@@ -27,7 +27,7 @@ public abstract class Currency {
         this.count = count;
     }
 
-    public boolean canProcess(int balance) {
+    public  boolean canProcess(int balance) {
         int money = currencyType.getValue();
 
         int notes = balance / money;

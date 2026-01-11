@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Card {
         private final String cardId;
-        private int pin;
+        private final int pin;
 
         public String getCardId() {
             return cardId;
@@ -20,8 +20,6 @@ public class Card {
             return pin;
         }
 
-        public  void setPin(int pin) {
-            this.pin = pin;
-        }
+        
 
     }
