@@ -16,7 +16,7 @@ public class HasCardState implements AtmInterface{
     }
 
     @Override
-    public boolean enterPin(Bank bank, Card card, int pin)throws AccountException {
+    public synchronized boolean enterPin(Bank bank, Card card, int pin)throws AccountException {
         boolean res= bank.pinAuthentication(card, pin);
         
         return res;

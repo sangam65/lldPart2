@@ -22,6 +22,7 @@ public class AtmAuthenticatedState implements AtmInterface {
         throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
     }
 
+    // rollback will be added when database is added by adding transactional annotation
     @Override
     public synchronized void withDrawCash(Bank bank, Card card, Currency currency, int balance) {
         try {
@@ -38,7 +39,7 @@ public class AtmAuthenticatedState implements AtmInterface {
 
         } catch (AccountException|BankException e) {
             System.out.println(e.getMessage());
-            throw e;
+            
         }
 
     }

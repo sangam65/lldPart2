@@ -38,7 +38,7 @@ public class NoCardState implements AtmInterface {
     }
 
     @Override
-    public void addBank(Bank bank, HashMap<String, Bank> bankList) {
+    public synchronized void addBank(Bank bank, HashMap<String, Bank> bankList) {
         if (bankList.containsKey(bank.getBankId())) {
             throw new BankException("Bank already added to atm");
         }

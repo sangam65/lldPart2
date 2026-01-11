@@ -30,7 +30,7 @@ public class AtmClass {
         this.atmState = new NoCardState();
     }
 
-    public synchronized void addBank(Bank bank) throws BankException {
+    public  void addBank(Bank bank) throws BankException {
         atmState.addBank(bank, bankList);
 
     }
@@ -56,7 +56,7 @@ public class AtmClass {
 
     }
 
-    public synchronized boolean matchPin(int pin) throws AccountException {
+    public boolean matchPin(int pin) throws AccountException {
         boolean pinMatched= atmState.enterPin(bankOfInsertedCard, insertedCard, pin);
         if(pinMatched==true){
             this.atmState = new AtmAuthenticatedState();
