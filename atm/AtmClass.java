@@ -79,7 +79,7 @@ public class AtmClass {
     }
 
     public synchronized void withDrawBalance(int balanace) throws AccountException {
-        currency.canProcess(balanace);
+       
         atmState.withDrawCash(bankOfInsertedCard, insertedCard,currency, balanace);
        
         this.atmState=new NoCardState();

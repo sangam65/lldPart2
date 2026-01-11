@@ -30,33 +30,32 @@ public abstract class Currency {
         this.count = count;
     }
 
-    public  boolean canProcess(int balance) {
-        try{
+    public boolean canProcess(int balance) {
+        try {
             reentrantReadWriteLock.writeLock().lock();
             int money = currencyType.getValue();
 
-        int notes = balance / money;
-        if (notes > count) {
-            System.out.println("Atm does not have sufficient balance");
-        }
-        balance -= (notes * money);
-        if (balance == 0)
-            return true;
-        if (next == null)
-            return false;
-        return next.canProcess(balance);
-        }
-        finally{
+            int notes = balance / money;
+            if (notes > count) {
+                System.out.println("Atm does not have sufficient balance");
+                return false;
+            }
+            balance -= (notes * money);
+            if (balance == 0)
+                return true;
+            if (next == null)
+                return false;
+            return next.canProcess(balance);
+        } finally {
             reentrantReadWriteLock.writeLock().unlock();
         }
-        
 
     }
 
     public void displayNotes(int balance) {
         try {
             reentrantReadWriteLock.writeLock().lock();
-            
+
             int money = currencyType.getValue();
 
             int notes = balance / money;

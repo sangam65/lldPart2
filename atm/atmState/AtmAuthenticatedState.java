@@ -7,6 +7,7 @@ import atm.currency.CurrencyType;
 import atm.entites.Bank;
 import atm.entites.Card;
 import atm.exception.AccountException;
+import atm.exception.BankException;
 
 public class AtmAuthenticatedState implements AtmInterface {
 
@@ -24,11 +25,14 @@ public class AtmAuthenticatedState implements AtmInterface {
     @Override
     public void withDrawCash(Bank bank, Card card, Currency currency, int balance) {
         try {
-            currency.canProcess(balance);
+            boolean cashDispense=currency.canProcess(balance);
+            if(cashDispense==false){
+                throw new BankException("Bank does not have enough balance to dispense this money");
+            }
             bank.withDrawCash(card, balance);
             currency.displayNotes(balance);
 
-        } catch (AccountException e) {
+        } catch (AccountException|BankException e) {
             System.out.println(e.getMessage());
 
         }
