@@ -15,7 +15,7 @@ public interface AtmInterface {
 
     void insertCard(Card card);
     boolean enterPin(Bank bank,Card card,int pin);
-    void withDrawCash(Bank bank,Card card,int balance);
+    void withDrawCash(Bank bank,Card card,Currency currency,int balance);
     void deposit(Currency currency,CurrencyType currencyType,int count);
     void checkBalance(Bank bank,Card card);
     void addBank(Bank bank,HashMap<String,Bank>bankList);

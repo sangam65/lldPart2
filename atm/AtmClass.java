@@ -65,7 +65,7 @@ public class AtmClass {
 
     public synchronized void withDrawBalance(int balanace) throws AccountException {
         currency.canProcess(balanace);
-        atmState.withDrawCash(bankOfInsertedCard, insertedCard, balanace);
+        atmState.withDrawCash(bankOfInsertedCard, insertedCard,currency, balanace);
         System.out.println("ejecting card");
         this.atmState=new NoCardState();
     }

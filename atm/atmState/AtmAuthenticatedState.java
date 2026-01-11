@@ -22,10 +22,11 @@ public class AtmAuthenticatedState implements AtmInterface{
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card,int balance) {
+    public void withDrawCash(Bank bank, Card card,Currency currency,int balance) {
         try{
 
             bank.withDrawCash(card, balance);
+            currency.displayNotes(balance);
             
         }
         catch(AccountException e){

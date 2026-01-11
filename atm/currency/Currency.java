@@ -17,7 +17,7 @@ public abstract class Currency {
         return count;
     }
 
-    public void setCount(int count) {
+    public synchronized void setCount(int count) {
         this.count = count;
     }
 
@@ -43,19 +43,20 @@ public abstract class Currency {
 
     }
 
-    public void displayNotes(int balance) {
+    public  void displayNotes(int balance) {
             int money = currencyType.getValue();
 
         int notes = balance / money;
         System.out.println("notes of "+currencyType+" "+notes);
           balance -= (notes * money);
+          this.count-=notes;
         if (balance == 0)
             return ;
         next.canProcess(balance);
     }
     public synchronized boolean addCurrency(CurrencyType currencyType,int count){
         if(this.currencyType.equals(currencyType)){
-            this.currencyType.setValue(count+this.currencyType.getValue());
+            this.count+=count;
             return true;
         }
         if(next==null)return false;

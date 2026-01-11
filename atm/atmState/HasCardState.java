@@ -24,7 +24,7 @@ public class HasCardState implements AtmInterface{
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card, int balance) {
+    public void withDrawCash(Bank bank, Card card,Currency currency, int balance) {
        throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 

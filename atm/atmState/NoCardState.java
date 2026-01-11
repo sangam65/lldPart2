@@ -16,7 +16,7 @@ public class NoCardState implements AtmInterface {
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card, int balance) {
+    public void withDrawCash(Bank bank, Card card,Currency currency, int balance) {
         throw new UnsupportedOperationException("Atm don't has card to perform operation");
     }
 
