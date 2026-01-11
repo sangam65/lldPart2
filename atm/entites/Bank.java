@@ -87,6 +87,23 @@ public class Bank {
         }
 
     }
+    public int checkBalance(Card card) throws AccountException {
+
+        
+        if (!accounts.containsKey(card.getCardId())) {
+            throw new AccountException("Card number is invalid");
+        }
+        try {
+            Account account=accounts.get(card.getCardId());
+            synchronized (this) {
+                return account.getBalance();
+
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
 
     public int withDrawCash(Card card, int balance) throws AccountException {
         if (balance <= 0) {

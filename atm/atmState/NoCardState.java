@@ -17,17 +17,17 @@ public class NoCardState  implements AtmInterface{
     
 
     @Override
-    public boolean enterPin(Bank bank, Card card, int pin,AtmInterface currentState) {
+    public boolean enterPin(Bank bank, Card card, int pin) {
          throw new UnsupportedOperationException("Atm don't has card to perform operation");
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card, int balance,AtmInterface currentState) {
+    public void withDrawCash(Bank bank, Card card, int balance) {
          throw new UnsupportedOperationException("Atm don't has card to perform operation");
     }
 
     @Override
-    public void deposit(Currency currency, CurrencyType currencyType, int count,AtmInterface currentState){
+    public void deposit(Currency currency, CurrencyType currencyType, int count){
         boolean added=currency.addCurrency(currencyType, count);
         if(added==true){
             System.out.println("Currency added ");
@@ -40,13 +40,13 @@ public class NoCardState  implements AtmInterface{
     }
 
     @Override
-    public void checkBalance(Bank bank, Card card,AtmInterface currentState) {
+    public void checkBalance(Bank bank, Card card) {
         
          throw new UnsupportedOperationException("Atm don't has card to perform operation");
     }
 
     @Override
-    public void addBank(Bank bank,HashMap<String,Bank>bankList,AtmInterface currentState) {
+    public void addBank(Bank bank,HashMap<String,Bank>bankList) {
         if(bankList.containsKey(bank.getBankId())){
             throw new BankException("Bank already added to atm");
         }
@@ -56,7 +56,7 @@ public class NoCardState  implements AtmInterface{
     
 
     @Override
-    public void insertCard(Card card,AtmInterface currentState) {
+    public void insertCard(Card card) {
         System.out.println("Card inserted");
     }
 

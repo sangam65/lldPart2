@@ -11,18 +11,18 @@ import atm.exception.AccountException;
 public class AtmAuthenticatedState implements AtmInterface{
 
     @Override
-    public void insertCard(Card card,AtmInterface currentState) {
+    public void insertCard(Card card) {
                 throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
     }
 
     @Override
-    public boolean enterPin(Bank bank, Card card, int pin,AtmInterface currentState) {
+    public boolean enterPin(Bank bank, Card card, int pin) {
       
             throw new UnsupportedOperationException("Atm has card and authentication done, can't perform this operation");
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card,int balance,AtmInterface currentState) {
+    public void withDrawCash(Bank bank, Card card,int balance) {
         try{
 
             bank.withDrawCash(card, balance);
@@ -30,7 +30,7 @@ public class AtmAuthenticatedState implements AtmInterface{
         }
         catch(AccountException e){
             System.out.println(e.getMessage());
-            currentState=new NoCardState();
+            
 
             
         }
@@ -38,19 +38,24 @@ public class AtmAuthenticatedState implements AtmInterface{
     }
 
     @Override
-    public void deposit(Currency currency, CurrencyType currencyType, int count,AtmInterface currentState) {
+    public void deposit(Currency currency, CurrencyType currencyType, int count) {
         
         throw new UnsupportedOperationException("Unimplemented method 'deposit'");
     }
 
     @Override
-    public void checkBalance(Bank bank, Card card,AtmInterface currentState) {
-       
-        throw new UnsupportedOperationException("Unimplemented method 'checkBalance'");
+    public void checkBalance(Bank bank, Card card) {
+       try{
+        int balance= bank.checkBalance(card);
+       System.out.println("balance "+balance);
+       }
+       catch(Exception e){
+
+       }
     }
 
     @Override
-    public void addBank(Bank bank, HashMap<String, Bank> bankList,AtmInterface currentState) {
+    public void addBank(Bank bank, HashMap<String, Bank> bankList) {
 
         throw new UnsupportedOperationException("Unimplemented method 'addBank'");
     }

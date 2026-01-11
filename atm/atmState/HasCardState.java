@@ -11,12 +11,12 @@ import atm.exception.AccountException;
 public class HasCardState implements AtmInterface{
 
     @Override
-    public void insertCard(Card card,AtmInterface currentState) {
+    public void insertCard(Card card) {
         throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 
     @Override
-    public boolean enterPin(Bank bank, Card card, int pin,AtmInterface currentState)throws AccountException {
+    public boolean enterPin(Bank bank, Card card, int pin)throws AccountException {
         boolean res= bank.pinAuthentication(card, pin);
         
         return res;
@@ -24,22 +24,22 @@ public class HasCardState implements AtmInterface{
     }
 
     @Override
-    public void withDrawCash(Bank bank, Card card, int balance,AtmInterface currentState) {
+    public void withDrawCash(Bank bank, Card card, int balance) {
        throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 
     @Override
-    public void deposit(Currency currency, CurrencyType currencyType, int count,AtmInterface currentState) {
+    public void deposit(Currency currency, CurrencyType currencyType, int count) {
        throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 
     @Override
-    public void checkBalance(Bank bank, Card card,AtmInterface currentState) {
+    public void checkBalance(Bank bank, Card card) {
        throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 
     @Override
-    public void addBank(Bank bank, HashMap<String, Bank> bankList,AtmInterface currentState) {
+    public void addBank(Bank bank, HashMap<String, Bank> bankList) {
       
         throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }

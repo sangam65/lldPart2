@@ -25,7 +25,7 @@ public class AtmClass {
         this.atmState=new NoCardState();
     }
     public synchronized void addBank(Bank bank) throws BankException{
-        atmState.addBank(bank, bankList,atmState);
+        atmState.addBank(bank, bankList);
     }
     public synchronized void insertcard(atm.entites.Card card) throws BankException{
         Bank bank=findBankAssociatedWithCard(card);
@@ -45,19 +45,23 @@ public class AtmClass {
     }
 
     public synchronized boolean matchPin(int pin) throws AccountException{
-         atmState.enterPin(bankOfInsertedCard, insertedCard, pin,atmState);
+         atmState.enterPin(bankOfInsertedCard, insertedCard, pin);
          this.atmState=atmState.changeState(atmState);
          return true;
     }
 
 
     public synchronized void checkBalance(){
-        atmState.checkBalance(bankOfInsertedCard, insertedCard,atmState);
+        atmState.checkBalance(bankOfInsertedCard, insertedCard);
+                System.out.println("ejecting card");
+        atmState.changeState(new NoCardState());
     }
 
 
     public synchronized void withDrawBalance(int balanace)throws AccountException{
         currency.canProcess(balanace);
-        atmState.withDrawCash(bankOfInsertedCard, insertedCard, balanace, atmState);
+        atmState.withDrawCash(bankOfInsertedCard, insertedCard, balanace);
+        System.out.println("ejecting card");
+        atmState.changeState(new NoCardState());
     }
 }
