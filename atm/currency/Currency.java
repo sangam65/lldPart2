@@ -53,7 +53,7 @@ public abstract class Currency {
             return ;
         next.canProcess(balance);
     }
-    public boolean addCurrency(CurrencyType currencyType,int count){
+    public synchronized boolean addCurrency(CurrencyType currencyType,int count){
         if(this.currencyType.equals(currencyType)){
             this.currencyType.setValue(count+this.currencyType.getValue());
             return true;
