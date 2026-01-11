@@ -6,7 +6,7 @@ public abstract class Currency {
     private final Currency next;
     private int count;
     private final CurrencyType currencyType;
-    private final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public CurrencyType getCurrencyType() {
         return currencyType;
@@ -30,47 +30,45 @@ public abstract class Currency {
         this.count = count;
     }
 
-    public boolean canProcess(int balance) {
+    public boolean reserveAndValidate(int balance) {
         try {
-            reentrantReadWriteLock.writeLock().lock();
+            lock.writeLock().lock();
             int money = currencyType.getValue();
-
             int notes = balance / money;
+            
             if (notes > count) {
-                System.out.println("Atm does not have sufficient balance");
-                return false;
+                return false;  // Can't dispense from this denomination
             }
+            
+            // RESERVE the notes (mark as taken)
+            this.count -= notes;
             balance -= (notes * money);
+            
             if (balance == 0)
-                return true;
+                return true;  // Success, all denominations reserved
+            
             if (next == null)
-                return false;
-            return next.canProcess(balance);
+                return false;  // Not enough for remaining balance
+            
+            return next.reserveAndValidate(balance);
         } finally {
-            reentrantReadWriteLock.writeLock().unlock();
+            lock.writeLock().unlock();
         }
-
     }
 
     public void displayNotes(int balance) {
-        try {
-            reentrantReadWriteLock.writeLock().lock();
+        int money = currencyType.getValue();
 
-            int money = currencyType.getValue();
+        int notes = balance / money;
 
-            int notes = balance / money;
+        balance -= (notes * money);
 
-            balance -= (notes * money);
-            this.count -= notes;
-            System.out.println("notes of " + currencyType + " " + notes);
-            if (balance == 0)
-                return;
-            next.displayNotes(balance);
-        } catch (Exception e) {
+        this.count -= notes;
+        System.out.println("notes of " + currencyType + " " + notes);
 
-        } finally {
-            reentrantReadWriteLock.writeLock().unlock();
-        }
+        if (balance == 0)
+            return;
+        next.displayNotes(balance);
 
     }
 

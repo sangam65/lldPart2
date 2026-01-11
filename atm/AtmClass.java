@@ -79,11 +79,16 @@ public class AtmClass {
     }
 
     public synchronized void withDrawBalance(int balanace) throws AccountException {
-       
-        atmState.withDrawCash(bankOfInsertedCard, insertedCard,currency, balanace);
+       try{
+         atmState.withDrawCash(bankOfInsertedCard, insertedCard,currency, balanace);
        
         this.atmState=new NoCardState();
         setBankAndCardNull();
+       }
+       catch(BankException | AccountException e){
+            
+       }
+       
     }
     private void setBankAndCardNull(){
          System.out.println("ejecting card");
