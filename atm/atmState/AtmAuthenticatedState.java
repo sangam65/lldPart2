@@ -60,11 +60,7 @@ public class AtmAuthenticatedState implements AtmInterface{
         throw new UnsupportedOperationException("Unimplemented method 'addBank'");
     }
 
-    @Override
-    public AtmInterface changeState(AtmInterface currentState) {
-       
-        return new NoCardState();
-    }
+    
 
     
     

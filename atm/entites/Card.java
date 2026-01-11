@@ -16,11 +16,11 @@ public class Card {
             this.pin = pin;
         }
 
-        public int getPin() {
+        public synchronized int getPin() {
             return pin;
         }
 
-        public  void setPin(int pin) {
+        public synchronized void setPin(int pin) {
             this.pin = pin;
         }
 

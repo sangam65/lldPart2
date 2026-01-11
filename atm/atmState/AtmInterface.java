@@ -19,7 +19,7 @@ public interface AtmInterface {
     void deposit(Currency currency,CurrencyType currencyType,int count);
     void checkBalance(Bank bank,Card card);
     void addBank(Bank bank,HashMap<String,Bank>bankList);
-    AtmInterface changeState(AtmInterface currentState);
+
     
 
 }

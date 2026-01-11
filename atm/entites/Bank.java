@@ -1,6 +1,7 @@
 package atm.entites;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import atm.exception.AccountException;
@@ -14,6 +15,9 @@ public class Bank {
     public Bank() {
         this.bankId = UUID.randomUUID().toString();
         this.accounts = new HashMap<>();
+    }
+    public List<Account> getAllAccounts(){
+        return accounts.values().stream().filter(null).toList();
     }
 
     

@@ -44,12 +44,6 @@ public class HasCardState implements AtmInterface{
         throw new UnsupportedOperationException("Atm has card, can't perform this operation");
     }
 
-    @Override
-    public AtmInterface changeState(AtmInterface currentState) {
-        currentState= new AtmAuthenticatedState();
-        return currentState;
-    }
-
     
 
 }
