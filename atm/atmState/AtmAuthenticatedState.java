@@ -54,8 +54,8 @@ public class AtmAuthenticatedState implements AtmInterface {
         try {
             int balance = bank.checkBalance(card);
             System.out.println("balance " + balance);
-        } catch (Exception e) {
-
+        } catch (AccountException e) {
+            System.out.println("display :"+e.getMessage());
         }
     }
 
