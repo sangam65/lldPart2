@@ -23,6 +23,11 @@ public class Logger {
         }
         return logger.get(className);
     }
+    public  static Logger getLogger(Class<?> clazz){
+        String className=clazz.getName();
+        
+        return getLogger(className);
+    }
     public  void info(String message){
         checkLevelAllowed(Log.INFO,message);
   
@@ -39,7 +44,7 @@ public class Logger {
     public void trace(String message){
         checkLevelAllowed(Log.TRACE,message);
     }
-    public void changeLeve(Log log) {
+    public void changeLevel(Log log) {
         this.log=log;
     }
     private void checkLevelAllowed(Log log,String message){
