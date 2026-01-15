@@ -1,61 +1,87 @@
 package logger.entities;
 
-import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import logger.appender.ConsoleAppender;
+
 import logger.appender.LogAppender;
-import logger.enums.Log;
+import logger.enums.LogLevel;
 
 
 public class Logger {
-    private final static HashMap<String,Logger>logger=new HashMap<>();
-    private  Log log ;
-    private LogAppender logAppender;
-    private Logger(){
-        this.log=Log.INFO;
-        this.logAppender=new ConsoleAppender();
+    private final String name;
+    private LogLevel logLevel  ;
+    private final Logger parent;
+
+    public Logger getParent() {
+        return parent;
     }
-    public  static Logger getLogger(String className){
-        if(!logger.containsKey(className)){
-            synchronized(Logger.class){
-                logger.put(className,new Logger());
-            }
-        }
-        return logger.get(className);
+    private boolean additivity;
+    private List<LogAppender> appenderList;
+   
+    public LogLevel getLogLevel() {
+        return logLevel;
     }
-    public  static Logger getLogger(Class<?> clazz){
-        String className=clazz.getName();
-        
-        return getLogger(className);
+    public void setLogLevel(LogLevel logLevel) {
+        this.logLevel = logLevel;
     }
+    public boolean isAdditivity() {
+        return additivity;
+    }
+    public void setAdditivity(boolean additivity) {
+        this.additivity = additivity;
+    }
+    public List<LogAppender> getAppenderList() {
+        return appenderList;
+    }
+    public void setAppenderList(List<LogAppender> appenderList) {
+        this.appenderList = appenderList;
+    }
+    public Logger(String name, Logger parent) {
+        this.name = name;
+        this.logLevel=LogLevel.INFO;
+        this.parent = parent;
+        this.additivity = false;
+        this.appenderList = new CopyOnWriteArrayList<>();
+    }
+  
     public  void info(String message){
-        checkLevelAllowed(Log.INFO,message);
+        checkLevelAllowed(LogLevel.INFO,message);
   
     }
     public void warn(String message){
-        checkLevelAllowed(Log.WARN, message);
+        checkLevelAllowed(LogLevel.WARN, message);
     }
     public void error(String message){
-         checkLevelAllowed(Log.ERROR,message);
+         checkLevelAllowed(LogLevel.ERROR,message);
     }
     public void debug(String message){
-        checkLevelAllowed(Log.DEBUG,message);
+        checkLevelAllowed(LogLevel.DEBUG,message);
     }
     public void trace(String message){
-        checkLevelAllowed(Log.TRACE,message);
+        checkLevelAllowed(LogLevel.TRACE,message);
     }
-    public void changeLevel(Log log) {
-        this.log=log;
+    public void changeLevel(LogLevel log) {
+        this.logLevel=log;
     }
-    private void checkLevelAllowed(Log log,String message){
-        if (this.log.getLevel()<=log.getLevel()){
-            logAppender.formatLog (log.name(), message);
+    public LogLevel getLevel(){
+      return this.logLevel;
+
+    }
+    private void checkLevelAllowed(LogLevel log,String message){
+       if( this.logLevel.isGreaterOrEqual(log)){
+
+            callAppenders(new LogMessage(log, name, message));
+       }
           
+    }
+    private void callAppenders(LogMessage logMessage){
+        for(LogAppender appender:appenderList){
+            appender.append(logMessage);
         }
-          
     }
-    public  void changeAppender(LogAppender logAppender){
-        this.logAppender=logAppender;
+    public  void addAppender(LogAppender logAppender){
+        this.appenderList.add(logAppender);
     }
 
 
