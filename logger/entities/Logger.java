@@ -36,7 +36,7 @@ public class Logger {
         checkLevelAllowed(Log.WARN, message);
     }
     public void error(String message){
-         checkLevelAllowed(Log.WARN,message);
+         checkLevelAllowed(Log.ERROR,message);
     }
     public void debug(String message){
         checkLevelAllowed(Log.DEBUG,message);
@@ -49,7 +49,7 @@ public class Logger {
     }
     private void checkLevelAllowed(Log log,String message){
         if (this.log.getLevel()<=log.getLevel()){
-            logAppender.formatLog(message);
+            logAppender.formatLog (log.name(), message);
           
         }
           

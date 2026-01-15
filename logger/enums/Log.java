@@ -1,13 +1,18 @@
 package logger.enums;
 
 public enum Log {
-    TRACE(1),
-    DEBUG(2),
-    INFO(3),
-    WARN(4),
-    ERROR(5);
+    TRACE("TRACE",1),
+    DEBUG("DEBUG",2),
+    INFO("INFO",3),
+    WARN("WARN",4),
+    ERROR("ERROR",5);
+    private final String name;
+    public String getName() {
+        return name;
+    }
     private final int level;
-    private Log(int level){
+    private Log(String name,int level){
+        this.name=name;
         this.level=level;
     }
     public int getLevel(){

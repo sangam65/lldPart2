@@ -1,5 +1,5 @@
 package logger.appender;
 
 public interface LogAppender {
-    public void formatLog(String msg);
+    public void formatLog(String level,String msg);
 }
