@@ -25,6 +25,9 @@ public class Topic {
         this.numberOfPartitions = numberOfPartitions;
 
         this.partitions=new Partition[numberOfPartitions];
+        for(int i=0;i<numberOfPartitions;i++){
+            this.partitions[i]=new Partition(this.topicId);
+        }
         
     }
 

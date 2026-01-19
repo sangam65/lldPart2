@@ -19,6 +19,7 @@ public class Producer  {
         if(topics.containsKey(topic.getTopicName())){
             throw new ProducerException("Topic is already added in given producer");
         }
+        this.topics.put(topic.getTopicName(),topic);
        
 
        
