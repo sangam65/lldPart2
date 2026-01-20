@@ -1,35 +1,50 @@
 package pubSubSystem.topics;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
-import pubSubSystem.exception.PartitionException;
+import pubSubSystem.consumer.Consumer;
+import pubSubSystem.exception.ConsumerException;
+
 
 public class Topic {
-    private final Partition []partitions;
-    private int numberOfPartitions;
+
     private final String topicName;
     private final String topicId;
-    
-    public int getNumberOfPartitions() {
-        return numberOfPartitions;
-    }
-
-    
-
-    public Topic(String topicName, int numberOfPartitions) {
+    private Map<String,Consumer>consumerList;
+    private final Deque<String>dataList;
+    public Topic(String topicName) {
 
         this.topicName = topicName;
         this.topicId = UUID.randomUUID().toString();
-        this.numberOfPartitions = numberOfPartitions;
-
-        this.partitions=new Partition[numberOfPartitions];
-        for(int i=0;i<numberOfPartitions;i++){
-            this.partitions[i]=new Partition(this.topicId);
-        }
+        this.dataList=new ArrayDeque<>();
+        this.consumerList=new ConcurrentHashMap<>();
         
     }
+
+   
+    
+    public List<Consumer> getConsumerList() {
+        List<Consumer>consumers=new ArrayList<>();
+        for(Consumer consumer:consumerList.values()){
+            consumers.add(consumer);
+        }
+        return consumers;
+        
+    }
+    public  synchronized void addConsumer(Consumer consumer){
+        if(consumerList.containsKey(consumer.getConsumerId())){
+            throw new ConsumerException("Consumer is already added");
+        }
+        consumerList.put(consumer.getConsumerId(),consumer);
+    }
+ 
+
 
 
 
@@ -42,44 +57,29 @@ public class Topic {
         return topicId;
     }
 
-    public void addDataToPartition(String data,int partitionNumber){
-        if(partitionNumber>=numberOfPartitions){
-            throw new PartitionException("PartitionNumber is greater than no of partitions given topic has");
+    public synchronized void addDataToPartition(String data){
+        dataList.addLast(data);
+        notifyConsumer();
+    
+    }
+    private  void removeData(){
+        dataList.pollFirst();
+    }
+    private void notifyConsumer(){
+        List<Consumer>consumers=getConsumerList();
+        for(Consumer consumer:consumers){
+            consumer.consumeData(dataList.peekFirst());
         }
-        Partition partition=partitions[partitionNumber];
-        partition.addData(data);
+        removeData();
+    }
+    public synchronized void removeConsumer(Consumer consumer){
+        if(!consumerList.containsKey(consumer.getConsumerId())){
+            throw new ConsumerException("Consumer not present in topic");
+        }
+        consumerList.remove(consumer.getConsumerId());
     }
 
     
 
-    protected class Partition {
-        private final String partitionId;
-        private final String topicId;
-        private final Deque<String> datas;
 
-        public String getPartitionId() {
-            return partitionId;
-        }
-
-        public String getTopicId() {
-            return topicId;
-        }
-
-        public void addData(String data) {
-            this.datas.addLast(data);
-        }
-
-        public Partition(String topicId) {
-            this.partitionId = UUID.randomUUID().toString();
-            this.topicId = topicId;
-            this.datas = new ArrayDeque<>();
-        }
-
-        public String consumeData() {
-            if (datas.isEmpty()) {
-                throw new PartitionException("No data to consume");
-            }
-            return datas.pollFirst();
-        }
-    }
 }

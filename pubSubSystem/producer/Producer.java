@@ -1,50 +1,35 @@
 package pubSubSystem.producer;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import pubSubSystem.exception.ProducerException;
-import pubSubSystem.topics.Topic;
+import java.util.UUID;
+import pubSubSystem.kafkaBroker.KafkaBroker;
 
 public class Producer  {
-    private final Map<String,Topic>topics;
-    private final Map<String,AtomicInteger>topicCounters;
-    public Producer(){
-        this.topics=new ConcurrentHashMap<>();
-        this.topicCounters=new ConcurrentHashMap<>();
 
+    private final String producerName;
+    private final String producerId;
+    private final KafkaBroker kafkaBroker;
+
+    public String getProducerName() {
+        return producerName;
     }
-    public  void addTopic(Topic topic){
-        if(topics.containsKey(topic.getTopicName())){
-            throw new ProducerException("Topic is already added in given producer");
-        }
-        this.topics.put(topic.getTopicName(),topic);
+    public String getProducerId() {
+        return producerId;
+    }
+    public Producer(String producerName,KafkaBroker kafkaBroker){
+       
+        this.producerId=UUID.randomUUID().toString();
+        this.producerName=producerName;
+        this.kafkaBroker=kafkaBroker;
        
 
-       
     }
+   
   
     public synchronized void produce(String topicName,String data) {
-        if(!topics.containsKey(topicName)){
-            throw new ProducerException("Topic not found in which data is to be produced");
-        }
-        Topic topic=topics.get(topicName);
-        int parititonCount=topic.getNumberOfPartitions();
-        int nextPartition=getNextPartition(topicName,parititonCount);
-        topic.addDataToPartition(data, nextPartition);
+        this.kafkaBroker.produceData(topicName, data);
        
     }
-    private int getNextPartition(String topicName,int parititionCount){
-        AtomicInteger partition=topicCounters.computeIfAbsent(topicName,k->new AtomicInteger(0));
-        return Math.abs(partition.getAndIncrement()%parititionCount);
-    }
-    public synchronized void produceDataAtPartition(String topicName,String data,int parititon){
-        if(!topics.containsKey(topicName)){
-            throw new ProducerException("Topic not found in which data is to be produced");
-        }
-        Topic topic=topics.get(topicName);
-        topic.addDataToPartition(data, parititon);
-    }
+   
+    
 
 }
