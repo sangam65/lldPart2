@@ -27,15 +27,15 @@ public class Consumer {
     public String getConsumerName() {
         return consumerName;
     }
-    public void consumeData(String data){
-        dataList.add(new Message(data));
+    public void consumeData(Message message){
+        dataList.add(message);
         
     }
     public synchronized void dataConsumed(){
         if(currentData>=this.dataList.size()){
             throw new ConsumerException("All data consumed");
         }
-        System.out.println(this.dataList.get(this.currentData));
+        this.dataList.get(this.currentData).getMessage();
         this.currentData++;
     }
     public synchronized List<Message> consumedData(){

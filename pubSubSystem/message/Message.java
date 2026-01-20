@@ -1,21 +1,23 @@
 package pubSubSystem.message;
 
-import java.time.Instant;
+
+import java.time.LocalDate;
 
 public class Message {
-    private final Instant instant;
-    private final String message;
-    public Instant getInstant() {
-        return instant;
+    private final LocalDate timeStamp;
+    public LocalDate getTimeStamp() {
+        return timeStamp;
     }
+    private final String message;
+   
     public String getMessage() {
         return message;
     }
     public Message( String message) {
-        this.instant = Instant.now();
+        this.timeStamp=LocalDate.now();
         this.message = message;
     }
     public void printMessage(){
-        System.out.println(message+" "+instant);
+        System.out.println(message+" "+timeStamp);
     }
 }
