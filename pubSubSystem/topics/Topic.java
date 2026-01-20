@@ -2,7 +2,8 @@ package pubSubSystem.topics;
 
 import java.time.Duration;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -83,7 +84,7 @@ public class Topic {
     // scheduled to run at every day will remove message whose time is greater than 12 hours will remove it
     public void removeFirstData(){
         while(!dataList.isEmpty()){
-           Duration duration=Duration.between(LocalDate.now(),dataList.peekFirst().getTimeStamp());
+           Duration duration=Duration.between(LocalDateTime.now(),dataList.peekFirst().getTimeStamp());
       
             if(duration.toHours()>12){
                 dataList.pollFirst();

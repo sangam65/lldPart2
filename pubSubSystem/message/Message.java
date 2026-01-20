@@ -1,11 +1,12 @@
 package pubSubSystem.message;
 
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 public class Message {
-    private final LocalDate timeStamp;
-    public LocalDate getTimeStamp() {
+    private final LocalDateTime timeStamp;
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
     private final String message;
@@ -14,7 +15,7 @@ public class Message {
         return message;
     }
     public Message( String message) {
-        this.timeStamp=LocalDate.now();
+        this.timeStamp=LocalDateTime.now();
         this.message = message;
     }
     public void printMessage(){
