@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import pubSubSystem.consumer.Consumer;
 import pubSubSystem.exception.ConsumerException;
+// import pubSubSystem.exception.PartitionException;
 import pubSubSystem.message.Message;
 
 
@@ -23,6 +24,7 @@ public class Topic {
     private final String topicId;
     private Map<String,Consumer>consumerList;
     private final Deque<Message>dataList;
+
     public Topic(String topicName) {
 
         this.topicName = topicName;
@@ -82,9 +84,10 @@ public class Topic {
         consumerList.remove(consumer.getConsumerId());
     }
     // scheduled to run at every day will remove message whose time is greater than 12 hours will remove it
+    // @Scheduled()
     public void removeFirstData(){
         while(!dataList.isEmpty()){
-           Duration duration=Duration.between(LocalDateTime.now(),dataList.peekFirst().getTimeStamp());
+           Duration duration=Duration.between(dataList.peekFirst().getTimeStamp(),LocalDateTime.now());
       
             if(duration.toHours()>12){
                 dataList.pollFirst();
@@ -95,7 +98,31 @@ public class Topic {
         }
     }
 
-    
+    protected class Partition {
+        private final String partitionId;
+        private final String topicId;
+        private final Deque<String> datas;
+
+        public String getPartitionId() {
+            return partitionId;
+        }
+
+        public String getTopicId() {
+            return topicId;
+        }
+
+        public void addData(String data) {
+            this.datas.addLast(data);
+        }
+
+        public Partition(String topicId) {
+            this.partitionId = UUID.randomUUID().toString();
+            this.topicId = topicId;
+            this.datas = new ArrayDeque<>();
+        }
+
+        
+    }
 
 
 }
