@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import taskmanagementsystem.enums.TaskPriority;
 import taskmanagementsystem.enums.TaskStatus;
 import taskmanagementsystem.exception.CommentException;
 import taskmanagementsystem.exception.TaskException;
@@ -52,7 +53,15 @@ public class User {
         this.userId = UUID.randomUUID().toString();
         this.name = name;
         this.comments = new ArrayList<>();
-        this.tasksToDo = new TreeSet<>(Task.comparator());
+        this.tasksToDo = new TreeSet<>((Task a,Task b)->{
+                TaskPriority taskA=a.getTaskPriority();
+                TaskPriority taskB=b.getTaskPriority();
+                if(taskA.getTaskPriorityValue()<taskB.getTaskPriorityValue())return -1;
+                else if(taskA.getTaskPriorityValue()==taskB.getTaskPriorityValue())return 0;
+                else
+                return 1;
+                //  return taskA.getTaskPriorityValue().compareTo(b.getTaskPriority().getTaskPriorityValue());
+            });
         this.completedTask = new ArrayList<>();
         this.currentTask = null;
     }
