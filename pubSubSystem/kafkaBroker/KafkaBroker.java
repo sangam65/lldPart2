@@ -35,6 +35,7 @@ public class KafkaBroker {
         Topic topic = topicList.get(topicName);
         topic.addDataToPartition(data);
     }
+    // made pr request
 
     public synchronized void removeConsumer(String topicName, Consumer consumer) {
         if (!topicList.containsKey(topicName)) {
