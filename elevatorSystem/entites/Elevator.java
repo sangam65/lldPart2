@@ -83,6 +83,9 @@ public class Elevator {
                 this.floors.add(new Pair(LiftDirection.DOWN, floor));
             }
         }
+        else{
+            this.floors.add(new Pair(liftDirection, floor));
+        }
     }
     public void elevatorMove()throws ElevatorException{
         if(this.floors.isEmpty()){
